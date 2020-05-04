@@ -6,7 +6,11 @@
 	<parent>
 		<groupId>org.palladiosimulator</groupId>
 		<artifactId>eclipse-parent-updatesite</artifactId>
+<<<<<<< HEAD
 		<version>0.5.1</version>
+=======
+		<version>0.4.4</version>
+>>>>>>> change parent pom version to 0.4.4 and tycho-tp-refresh-maven-plugin version to 0.2.5 for sonarqube integration
 	</parent>
 	<groupId>org.palladiosimulator.simulizar</groupId>
 	<artifactId>parent</artifactId>	

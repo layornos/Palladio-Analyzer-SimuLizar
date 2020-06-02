@@ -1,0 +1,12 @@
+org.palladiosimulator.simulizar.ui.perspective;size of observed system;3
+org.palladiosimulator.simulizar.ui.perspective;lines of code (LOC);69
+org.palladiosimulator.simulizar.ui.perspective;cyclomatic complexity bucket 1;6
+org.palladiosimulator.simulizar.ui.perspective;cyclomatic complexity bucket 2;0
+org.palladiosimulator.simulizar.ui.perspective;cyclomatic complexity bucket 3;1
+org.palladiosimulator.simulizar.ui.perspective;number of modules;5
+org.palladiosimulator.simulizar.ui.perspective;number of nodes;11
+org.palladiosimulator.simulizar.ui.perspective;number of edges;3
+org.palladiosimulator.simulizar.ui.perspective;hypergraph size;22.89550161336617
+org.palladiosimulator.simulizar.ui.perspective;hypergraph complexity;9.0
+org.palladiosimulator.simulizar.ui.perspective;inter module coupling;9.0
+org.palladiosimulator.simulizar.ui.perspective;graph cohesion;0.020267861582048984

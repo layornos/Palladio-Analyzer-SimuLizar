@@ -1,0 +1,14 @@
+org.palladiosimulator.simulizar.action.repository;size of observed system;4
+org.palladiosimulator.simulizar.action.repository;lines of code (LOC);262
+org.palladiosimulator.simulizar.action.repository;cyclomatic complexity bucket 1;18
+org.palladiosimulator.simulizar.action.repository;cyclomatic complexity bucket 2;4
+org.palladiosimulator.simulizar.action.repository;cyclomatic complexity bucket 3;1
+org.palladiosimulator.simulizar.action.repository;cyclomatic complexity bucket 4;0
+org.palladiosimulator.simulizar.action.repository;cyclomatic complexity bucket 5;1
+org.palladiosimulator.simulizar.action.repository;number of modules;23
+org.palladiosimulator.simulizar.action.repository;number of nodes;59
+org.palladiosimulator.simulizar.action.repository;number of edges;47
+org.palladiosimulator.simulizar.action.repository;hypergraph size;326.19275579937
+org.palladiosimulator.simulizar.action.repository;hypergraph complexity;106.16750619117511
+org.palladiosimulator.simulizar.action.repository;inter module coupling;63.01127737714006
+org.palladiosimulator.simulizar.action.repository;graph cohesion;0.005144032241100814

@@ -1,0 +1,14 @@
+org.palladiosimulator.simulizar.reconfiguration.henshin.model;size of observed system;10
+org.palladiosimulator.simulizar.reconfiguration.henshin.model;lines of code (LOC);752
+org.palladiosimulator.simulizar.reconfiguration.henshin.model;cyclomatic complexity bucket 1;18
+org.palladiosimulator.simulizar.reconfiguration.henshin.model;cyclomatic complexity bucket 2;4
+org.palladiosimulator.simulizar.reconfiguration.henshin.model;cyclomatic complexity bucket 3;4
+org.palladiosimulator.simulizar.reconfiguration.henshin.model;cyclomatic complexity bucket 4;0
+org.palladiosimulator.simulizar.reconfiguration.henshin.model;cyclomatic complexity bucket 5;1
+org.palladiosimulator.simulizar.reconfiguration.henshin.model;number of modules;24
+org.palladiosimulator.simulizar.reconfiguration.henshin.model;number of nodes;60
+org.palladiosimulator.simulizar.reconfiguration.henshin.model;number of edges;49
+org.palladiosimulator.simulizar.reconfiguration.henshin.model;hypergraph size;283.7191066323436
+org.palladiosimulator.simulizar.reconfiguration.henshin.model;hypergraph complexity;87.5211213366945
+org.palladiosimulator.simulizar.reconfiguration.henshin.model;inter module coupling;46.883143057176625
+org.palladiosimulator.simulizar.reconfiguration.henshin.model;graph cohesion;0.0031199795149116976

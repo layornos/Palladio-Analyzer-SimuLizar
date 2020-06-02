@@ -1,0 +1,18 @@
+org.palladiosimulator.simulizar.measuringpoint.create;size of observed system;4
+org.palladiosimulator.simulizar.measuringpoint.create;lines of code (LOC);480
+org.palladiosimulator.simulizar.measuringpoint.create;cyclomatic complexity bucket 1;10
+org.palladiosimulator.simulizar.measuringpoint.create;cyclomatic complexity bucket 2;4
+org.palladiosimulator.simulizar.measuringpoint.create;cyclomatic complexity bucket 3;2
+org.palladiosimulator.simulizar.measuringpoint.create;cyclomatic complexity bucket 4;2
+org.palladiosimulator.simulizar.measuringpoint.create;cyclomatic complexity bucket 5;2
+org.palladiosimulator.simulizar.measuringpoint.create;cyclomatic complexity bucket 6;2
+org.palladiosimulator.simulizar.measuringpoint.create;cyclomatic complexity bucket 7;2
+org.palladiosimulator.simulizar.measuringpoint.create;cyclomatic complexity bucket 8;0
+org.palladiosimulator.simulizar.measuringpoint.create;cyclomatic complexity bucket 9;1
+org.palladiosimulator.simulizar.measuringpoint.create;number of modules;47
+org.palladiosimulator.simulizar.measuringpoint.create;number of nodes;98
+org.palladiosimulator.simulizar.measuringpoint.create;number of edges;168
+org.palladiosimulator.simulizar.measuringpoint.create;hypergraph size;642.1321223132609
+org.palladiosimulator.simulizar.measuringpoint.create;hypergraph complexity;852.9277526168114
+org.palladiosimulator.simulizar.measuringpoint.create;inter module coupling;716.2891254615727
+org.palladiosimulator.simulizar.measuringpoint.create;graph cohesion;0.013368574282616268

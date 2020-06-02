@@ -1,0 +1,24 @@
+org.palladiosimulator.simulizar.reconfigurationrule;size of observed system;22
+org.palladiosimulator.simulizar.reconfigurationrule;lines of code (LOC);2906
+org.palladiosimulator.simulizar.reconfigurationrule;cyclomatic complexity bucket 1;49
+org.palladiosimulator.simulizar.reconfigurationrule;cyclomatic complexity bucket 2;25
+org.palladiosimulator.simulizar.reconfigurationrule;cyclomatic complexity bucket 3;9
+org.palladiosimulator.simulizar.reconfigurationrule;cyclomatic complexity bucket 4;5
+org.palladiosimulator.simulizar.reconfigurationrule;cyclomatic complexity bucket 5;3
+org.palladiosimulator.simulizar.reconfigurationrule;cyclomatic complexity bucket 6;1
+org.palladiosimulator.simulizar.reconfigurationrule;cyclomatic complexity bucket 7;0
+org.palladiosimulator.simulizar.reconfigurationrule;cyclomatic complexity bucket 8;0
+org.palladiosimulator.simulizar.reconfigurationrule;cyclomatic complexity bucket 9;0
+org.palladiosimulator.simulizar.reconfigurationrule;cyclomatic complexity bucket 10;0
+org.palladiosimulator.simulizar.reconfigurationrule;cyclomatic complexity bucket 11;0
+org.palladiosimulator.simulizar.reconfigurationrule;cyclomatic complexity bucket 12;0
+org.palladiosimulator.simulizar.reconfigurationrule;cyclomatic complexity bucket 13;0
+org.palladiosimulator.simulizar.reconfigurationrule;cyclomatic complexity bucket 14;0
+org.palladiosimulator.simulizar.reconfigurationrule;cyclomatic complexity bucket 15;1
+org.palladiosimulator.simulizar.reconfigurationrule;number of modules;45
+org.palladiosimulator.simulizar.reconfigurationrule;number of nodes;210
+org.palladiosimulator.simulizar.reconfigurationrule;number of edges;231
+org.palladiosimulator.simulizar.reconfigurationrule;hypergraph size;1163.0916668562925
+org.palladiosimulator.simulizar.reconfigurationrule;hypergraph complexity;1160.758561043161
+org.palladiosimulator.simulizar.reconfigurationrule;inter module coupling;890.7565980812437
+org.palladiosimulator.simulizar.reconfigurationrule;graph cohesion;0.0013875379349779157

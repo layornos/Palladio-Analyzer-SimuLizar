@@ -107,18 +107,18 @@ public class AllocationLookupSyncer extends AbstractModelObserver<Allocation>
      */
     protected void addAssemblyAllocation(AssemblyContext ctx, List<AssemblyContext> ctxHierarchy,
             AbstractSimulatedResourceContainer container) {
-        var hierarchy = ctxHierarchy;
+        List<AssemblyContext> hierarchy = ctxHierarchy;
         if (ctxHierarchy.isEmpty()) {
             simulatedContainerStorage.put(ctx.getId(), container);
         } else {
-            var newHierarchy = new LinkedList<AssemblyContext>(ctxHierarchy);
-            newHierarchy.push(ctx);
+            List<AssemblyContext> newHierarchy = new LinkedList<AssemblyContext>(ctxHierarchy);
+            ((LinkedList<AssemblyContext>) newHierarchy).push(ctx);
             simulatedContainerStorage.put(new FQComponentID(newHierarchy).getFQIDString(), container);
             hierarchy = newHierarchy;
         }
 
         if (ctx.getEncapsulatedComponent__AssemblyContext() instanceof CompositeComponent) {
-            var composite = (CompositeComponent) ctx;
+            CompositeComponent composite = (CompositeComponent) ctx;
             for (var compCtx : composite.getAssemblyContexts__ComposedStructure()) {
                 addAssemblyAllocation(compCtx, hierarchy, container);
             }
@@ -139,18 +139,18 @@ public class AllocationLookupSyncer extends AbstractModelObserver<Allocation>
      *                     CompositeComponents. Provide an empty list if none.
      */
     protected void removeAssemblyAllocation(AssemblyContext ctx, List<AssemblyContext> ctxHierarchy) {
-        var hierarchy = ctxHierarchy;
+        List<AssemblyContext> hierarchy = ctxHierarchy;
         if (ctxHierarchy.isEmpty()) {
             simulatedContainerStorage.remove(ctx.getId());
         } else {
-            var newHierarchy = new LinkedList<AssemblyContext>(ctxHierarchy);
-            newHierarchy.push(ctx);
+            List<AssemblyContext> newHierarchy = new LinkedList<AssemblyContext>(ctxHierarchy);
+            ((LinkedList<AssemblyContext>) newHierarchy).push(ctx);
             simulatedContainerStorage.remove(new FQComponentID(newHierarchy).getFQIDString());
             hierarchy = newHierarchy;
         }
 
         if (ctx.getEncapsulatedComponent__AssemblyContext() instanceof CompositeComponent) {
-            var composite = (CompositeComponent) ctx;
+            CompositeComponent composite = (CompositeComponent) ctx;
             for (var compCtx : composite.getAssemblyContexts__ComposedStructure()) {
                 removeAssemblyAllocation(compCtx, hierarchy);
             }

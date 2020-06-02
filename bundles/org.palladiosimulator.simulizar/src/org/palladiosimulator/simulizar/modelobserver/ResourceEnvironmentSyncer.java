@@ -4,6 +4,7 @@ import static org.palladiosimulator.edp2.util.MetricDescriptionUtility.metricDes
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -35,6 +36,7 @@ import org.palladiosimulator.simulizar.utils.MonitorRepositoryUtil;
 import org.palladiosimulator.simulizar.utils.PCMPartitionManager;
 
 import de.uka.ipd.sdq.identifier.Identifier;
+import de.uka.ipd.sdq.simucomframework.resources.AbstractScheduledResource;
 import de.uka.ipd.sdq.simucomframework.resources.AbstractSimulatedResourceContainer;
 import de.uka.ipd.sdq.simucomframework.resources.CalculatorHelper;
 import de.uka.ipd.sdq.simucomframework.resources.ScheduledResource;
@@ -115,7 +117,7 @@ public class ResourceEnvironmentSyncer extends AbstractResourceEnvironmentObserv
      */
     @Override
     protected void set(final Notification notification) {
-        var handled = syncIfFeatureOrCharacterizingStoExChanged(notification, ProcessingResourceSpecification.class,
+        boolean handled = syncIfFeatureOrCharacterizingStoExChanged(notification, ProcessingResourceSpecification.class,
                 SUPPORTED_PROCESSING_RESOURCE_STOEX_PROPERTIES, this::syncProcessingResource);
 
         handled |= syncIfFeatureOrCharacterizingStoExChanged(notification, CommunicationLinkResourceSpecification.class,
@@ -189,7 +191,7 @@ public class ResourceEnvironmentSyncer extends AbstractResourceEnvironmentObserv
         if (!this.runtimeModel.getModel()
             .getResourceRegistry()
             .containsResourceContainer(resourceContainer.getId())) {
-            final var simulatedResourceContainer = this.runtimeModel.getModel()
+            final de.uka.ipd.sdq.simucomframework.resources.AbstractSimulatedResourceContainer simulatedResourceContainer = this.runtimeModel.getModel()
                 .getResourceRegistry()
                 .createResourceContainer(resourceContainer.getId());
 
@@ -215,7 +217,7 @@ public class ResourceEnvironmentSyncer extends AbstractResourceEnvironmentObserv
         if (!this.runtimeModel.getModel()
             .getResourceRegistry()
             .containsResourceContainer(linkingResource.getId())) {
-            final var simulatedResourceContainer = this.runtimeModel.getModel()
+            final de.uka.ipd.sdq.simucomframework.resources.AbstractSimulatedResourceContainer simulatedResourceContainer = this.runtimeModel.getModel()
                 .getResourceRegistry()
                 .createLinkingResourceContainer(linkingResource.getId());
             if (linkingResource.getCommunicationLinkResourceSpecifications_LinkingResource() != null) {
@@ -274,15 +276,15 @@ public class ResourceEnvironmentSyncer extends AbstractResourceEnvironmentObserv
      *            the changed linking resource specification
      */
     private void syncLinkingResource(final CommunicationLinkResourceSpecification resourceSpec) {
-        var linkContainer = (SimulatedLinkingResourceContainer) getSimulatedResourceContainer(
+    	de.uka.ipd.sdq.simucomframework.resources.SimulatedLinkingResourceContainer linkContainer = (SimulatedLinkingResourceContainer) getSimulatedResourceContainer(
                 resourceSpec.getLinkingResource_CommunicationLinkResourceSpecification());
-        var activeResources = linkContainer.getAllActiveResources();
+    	HashMap<String, AbstractScheduledResource> activeResources = linkContainer.getAllActiveResources();
         if (activeResources.isEmpty()) {
             linkContainer.addActiveResourceWithoutCalculators(
                     resourceSpec.getLinkingResource_CommunicationLinkResourceSpecification(),
                     linkContainer.getResourceContainerID());
         } else {
-            var resource = Optional
+        	AbstractScheduledResource resource = Optional
                 .ofNullable(activeResources
                     .get(resourceSpec.getCommunicationLinkResourceType_CommunicationLinkResourceSpecification()
                         .getId()))
@@ -290,7 +292,7 @@ public class ResourceEnvironmentSyncer extends AbstractResourceEnvironmentObserv
                         "The %s currently does not support changing the resource type of a linking resource",
                         getClass())));
             if (resource instanceof SimulatedLinkingResource) {
-                var linkResource = (SimulatedLinkingResource) resource;
+            	de.uka.ipd.sdq.simucomframework.resources.SimulatedLinkingResource linkResource = (SimulatedLinkingResource) resource;
                 linkResource.setLatency(resourceSpec.getLatency_CommunicationLinkResourceSpecification()
                     .getSpecification());
                 linkResource.setThroughput(resourceSpec.getThroughput_CommunicationLinkResourceSpecification()

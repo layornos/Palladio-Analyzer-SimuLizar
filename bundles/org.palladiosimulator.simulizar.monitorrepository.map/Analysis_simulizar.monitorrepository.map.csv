@@ -1,0 +1,13 @@
+org.palladiosimulator.simulizar.monitorrepository.map;size of observed system;2
+org.palladiosimulator.simulizar.monitorrepository.map;lines of code (LOC);119
+org.palladiosimulator.simulizar.monitorrepository.map;cyclomatic complexity bucket 1;4
+org.palladiosimulator.simulizar.monitorrepository.map;cyclomatic complexity bucket 2;1
+org.palladiosimulator.simulizar.monitorrepository.map;cyclomatic complexity bucket 3;0
+org.palladiosimulator.simulizar.monitorrepository.map;cyclomatic complexity bucket 4;1
+org.palladiosimulator.simulizar.monitorrepository.map;number of modules;21
+org.palladiosimulator.simulizar.monitorrepository.map;number of nodes;32
+org.palladiosimulator.simulizar.monitorrepository.map;number of edges;30
+org.palladiosimulator.simulizar.monitorrepository.map;hypergraph size;163.8862737612612
+org.palladiosimulator.simulizar.monitorrepository.map;hypergraph complexity;84.83082902502204
+org.palladiosimulator.simulizar.monitorrepository.map;inter module coupling;73.01724285815936
+org.palladiosimulator.simulizar.monitorrepository.map;graph cohesion;0.01629959551986494

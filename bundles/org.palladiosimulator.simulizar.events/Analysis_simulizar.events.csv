@@ -1,0 +1,11 @@
+org.palladiosimulator.simulizar.events;size of observed system;5
+org.palladiosimulator.simulizar.events;lines of code (LOC);150
+org.palladiosimulator.simulizar.events;cyclomatic complexity bucket 1;15
+org.palladiosimulator.simulizar.events;cyclomatic complexity bucket 2;2
+org.palladiosimulator.simulizar.events;number of modules;24
+org.palladiosimulator.simulizar.events;number of nodes;59
+org.palladiosimulator.simulizar.events;number of edges;45
+org.palladiosimulator.simulizar.events;hypergraph size;313.79049244876296
+org.palladiosimulator.simulizar.events;hypergraph complexity;106.24231493360139
+org.palladiosimulator.simulizar.events;inter module coupling;96.95619151604524
+org.palladiosimulator.simulizar.events;graph cohesion;0.005147656877270226

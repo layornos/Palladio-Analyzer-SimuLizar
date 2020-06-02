@@ -1,0 +1,77 @@
+org.palladiosimulator.simulizar.action;size of observed system;93
+org.palladiosimulator.simulizar.action;lines of code (LOC);15970
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 1;305
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 2;129
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 3;45
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 4;22
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 5;18
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 6;5
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 7;5
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 8;1
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 9;9
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 10;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 11;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 12;3
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 13;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 14;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 15;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 16;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 17;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 18;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 19;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 20;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 21;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 22;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 23;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 24;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 25;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 26;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 27;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 28;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 29;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 30;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 31;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 32;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 33;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 34;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 35;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 36;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 37;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 38;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 39;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 40;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 41;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 42;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 43;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 44;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 45;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 46;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 47;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 48;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 49;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 50;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 51;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 52;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 53;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 54;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 55;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 56;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 57;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 58;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 59;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 60;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 61;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 62;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 63;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 64;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 65;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 66;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 67;0
+org.palladiosimulator.simulizar.action;cyclomatic complexity bucket 68;1
+org.palladiosimulator.simulizar.action;number of modules;178
+org.palladiosimulator.simulizar.action;number of nodes;916
+org.palladiosimulator.simulizar.action;number of edges;1373
+org.palladiosimulator.simulizar.action;hypergraph size;6193.616610856804
+org.palladiosimulator.simulizar.action;hypergraph complexity;9673.998842174391
+org.palladiosimulator.simulizar.action;inter module coupling;8031.959958827561
+org.palladiosimulator.simulizar.action;graph cohesion;5.105788399478361E-4

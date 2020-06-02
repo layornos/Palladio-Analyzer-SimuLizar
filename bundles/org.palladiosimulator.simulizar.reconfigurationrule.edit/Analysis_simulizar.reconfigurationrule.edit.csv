@@ -1,0 +1,24 @@
+org.palladiosimulator.simulizar.reconfigurationrule.edit;size of observed system;30
+org.palladiosimulator.simulizar.reconfigurationrule.edit;lines of code (LOC);3909
+org.palladiosimulator.simulizar.reconfigurationrule.edit;cyclomatic complexity bucket 1;84
+org.palladiosimulator.simulizar.reconfigurationrule.edit;cyclomatic complexity bucket 2;42
+org.palladiosimulator.simulizar.reconfigurationrule.edit;cyclomatic complexity bucket 3;13
+org.palladiosimulator.simulizar.reconfigurationrule.edit;cyclomatic complexity bucket 4;8
+org.palladiosimulator.simulizar.reconfigurationrule.edit;cyclomatic complexity bucket 5;3
+org.palladiosimulator.simulizar.reconfigurationrule.edit;cyclomatic complexity bucket 6;1
+org.palladiosimulator.simulizar.reconfigurationrule.edit;cyclomatic complexity bucket 7;0
+org.palladiosimulator.simulizar.reconfigurationrule.edit;cyclomatic complexity bucket 8;0
+org.palladiosimulator.simulizar.reconfigurationrule.edit;cyclomatic complexity bucket 9;0
+org.palladiosimulator.simulizar.reconfigurationrule.edit;cyclomatic complexity bucket 10;0
+org.palladiosimulator.simulizar.reconfigurationrule.edit;cyclomatic complexity bucket 11;0
+org.palladiosimulator.simulizar.reconfigurationrule.edit;cyclomatic complexity bucket 12;0
+org.palladiosimulator.simulizar.reconfigurationrule.edit;cyclomatic complexity bucket 13;0
+org.palladiosimulator.simulizar.reconfigurationrule.edit;cyclomatic complexity bucket 14;0
+org.palladiosimulator.simulizar.reconfigurationrule.edit;cyclomatic complexity bucket 15;1
+org.palladiosimulator.simulizar.reconfigurationrule.edit;number of modules;64
+org.palladiosimulator.simulizar.reconfigurationrule.edit;number of nodes;300
+org.palladiosimulator.simulizar.reconfigurationrule.edit;number of edges;352
+org.palladiosimulator.simulizar.reconfigurationrule.edit;hypergraph size;1981.217262903342
+org.palladiosimulator.simulizar.reconfigurationrule.edit;hypergraph complexity;1526.0265060628403
+org.palladiosimulator.simulizar.reconfigurationrule.edit;inter module coupling;1225.2134874810927
+org.palladiosimulator.simulizar.reconfigurationrule.edit;graph cohesion;9.553177305201388E-4

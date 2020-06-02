@@ -1,0 +1,17 @@
+org.palladiosimulator.simulizar.runtimemeasurement;size of observed system;14
+org.palladiosimulator.simulizar.runtimemeasurement;lines of code (LOC);1776
+org.palladiosimulator.simulizar.runtimemeasurement;cyclomatic complexity bucket 1;34
+org.palladiosimulator.simulizar.runtimemeasurement;cyclomatic complexity bucket 2;14
+org.palladiosimulator.simulizar.runtimemeasurement;cyclomatic complexity bucket 3;4
+org.palladiosimulator.simulizar.runtimemeasurement;cyclomatic complexity bucket 4;4
+org.palladiosimulator.simulizar.runtimemeasurement;cyclomatic complexity bucket 5;2
+org.palladiosimulator.simulizar.runtimemeasurement;cyclomatic complexity bucket 6;1
+org.palladiosimulator.simulizar.runtimemeasurement;cyclomatic complexity bucket 7;0
+org.palladiosimulator.simulizar.runtimemeasurement;cyclomatic complexity bucket 8;1
+org.palladiosimulator.simulizar.runtimemeasurement;number of modules;41
+org.palladiosimulator.simulizar.runtimemeasurement;number of nodes;140
+org.palladiosimulator.simulizar.runtimemeasurement;number of edges;141
+org.palladiosimulator.simulizar.runtimemeasurement;hypergraph size;813.997043798237
+org.palladiosimulator.simulizar.runtimemeasurement;hypergraph complexity;584.1018390831281
+org.palladiosimulator.simulizar.runtimemeasurement;inter module coupling;394.03092322435816
+org.palladiosimulator.simulizar.runtimemeasurement;graph cohesion;0.0017342105562756927

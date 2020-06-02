@@ -1,0 +1,11 @@
+org.palladiosimulator.simulizar.monitorrepository.feedthrough;size of observed system;2
+org.palladiosimulator.simulizar.monitorrepository.feedthrough;lines of code (LOC);84
+org.palladiosimulator.simulizar.monitorrepository.feedthrough;cyclomatic complexity bucket 1;6
+org.palladiosimulator.simulizar.monitorrepository.feedthrough;cyclomatic complexity bucket 2;1
+org.palladiosimulator.simulizar.monitorrepository.feedthrough;number of modules;18
+org.palladiosimulator.simulizar.monitorrepository.feedthrough;number of nodes;27
+org.palladiosimulator.simulizar.monitorrepository.feedthrough;number of edges;22
+org.palladiosimulator.simulizar.monitorrepository.feedthrough;hypergraph size;131.26858036140857
+org.palladiosimulator.simulizar.monitorrepository.feedthrough;hypergraph complexity;51.61464459278635
+org.palladiosimulator.simulizar.monitorrepository.feedthrough;inter module coupling;39.985744444772195
+org.palladiosimulator.simulizar.monitorrepository.feedthrough;graph cohesion;0.014594383376368352

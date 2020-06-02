@@ -1,0 +1,14 @@
+org.palladiosimulator.simulizar.reconfiguration.qvto.model.edit;size of observed system;13
+org.palladiosimulator.simulizar.reconfiguration.qvto.model.edit;lines of code (LOC);1014
+org.palladiosimulator.simulizar.reconfiguration.qvto.model.edit;cyclomatic complexity bucket 1;30
+org.palladiosimulator.simulizar.reconfiguration.qvto.model.edit;cyclomatic complexity bucket 2;5
+org.palladiosimulator.simulizar.reconfiguration.qvto.model.edit;cyclomatic complexity bucket 3;4
+org.palladiosimulator.simulizar.reconfiguration.qvto.model.edit;cyclomatic complexity bucket 4;0
+org.palladiosimulator.simulizar.reconfiguration.qvto.model.edit;cyclomatic complexity bucket 5;1
+org.palladiosimulator.simulizar.reconfiguration.qvto.model.edit;number of modules;30
+org.palladiosimulator.simulizar.reconfiguration.qvto.model.edit;number of nodes;82
+org.palladiosimulator.simulizar.reconfiguration.qvto.model.edit;number of edges;59
+org.palladiosimulator.simulizar.reconfiguration.qvto.model.edit;hypergraph size;410.5204211013258
+org.palladiosimulator.simulizar.reconfiguration.qvto.model.edit;hypergraph complexity;57.90849656575136
+org.palladiosimulator.simulizar.reconfiguration.qvto.model.edit;inter module coupling;24.00472590221881
+org.palladiosimulator.simulizar.reconfiguration.qvto.model.edit;graph cohesion;9.006461271296026E-4

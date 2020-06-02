@@ -1,0 +1,16 @@
+org.palladiosimulator.simulizar.edp2.measuringpoint;size of observed system;9
+org.palladiosimulator.simulizar.edp2.measuringpoint;lines of code (LOC);880
+org.palladiosimulator.simulizar.edp2.measuringpoint;cyclomatic complexity bucket 1;21
+org.palladiosimulator.simulizar.edp2.measuringpoint;cyclomatic complexity bucket 2;4
+org.palladiosimulator.simulizar.edp2.measuringpoint;cyclomatic complexity bucket 3;4
+org.palladiosimulator.simulizar.edp2.measuringpoint;cyclomatic complexity bucket 4;0
+org.palladiosimulator.simulizar.edp2.measuringpoint;cyclomatic complexity bucket 5;0
+org.palladiosimulator.simulizar.edp2.measuringpoint;cyclomatic complexity bucket 6;0
+org.palladiosimulator.simulizar.edp2.measuringpoint;cyclomatic complexity bucket 7;1
+org.palladiosimulator.simulizar.edp2.measuringpoint;number of modules;21
+org.palladiosimulator.simulizar.edp2.measuringpoint;number of nodes;59
+org.palladiosimulator.simulizar.edp2.measuringpoint;number of edges;54
+org.palladiosimulator.simulizar.edp2.measuringpoint;hypergraph size;272.7855902278116
+org.palladiosimulator.simulizar.edp2.measuringpoint;hypergraph complexity;90.16217613302638
+org.palladiosimulator.simulizar.edp2.measuringpoint;inter module coupling;45.68000327598267
+org.palladiosimulator.simulizar.edp2.measuringpoint;graph cohesion;0.00332225623841214

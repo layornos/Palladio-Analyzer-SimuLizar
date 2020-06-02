@@ -56,9 +56,15 @@ public class ReconfigurationProcess extends SimuComSimProcess {
 	protected ReconfigurationProcess(final SimuComModel model, final Iterable<IReconfigurationEngine> reconfigurators,
 			final Reconfigurator reconfigurator) {
 		super(model, "Reconfiguration Process");
-		this.reconfigurators = Objects.requireNonNull(reconfigurators, "reconfigurators must not be null");
-		this.reconfigurator = Objects.requireNonNull(reconfigurator, "reconfigurator must not be null");
-		this.simControl = Objects.requireNonNull(model, "Passed SimuComModel must not be null").getSimulationControl();
+		Objects.requireNonNull(reconfigurators, "reconfigurators must not be null");
+		this.reconfigurators = reconfigurators;
+		
+		Objects.requireNonNull(reconfigurator, "reconfigurator must not be null");
+		this.reconfigurator = reconfigurator;
+		
+		Objects.requireNonNull(model, "Passed SimuComModel must not be null");
+		this.simControl = model.getSimulationControl();
+		
 		this.currentReconfigNotifications = new ArrayList<>();
 		this.transformations = new BasicEList<ModelTransformation<? extends Object>>();
 		reconfigurator.getReconfigurationLoaders().forEach(l -> {

@@ -34,3 +34,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Import-Package: de.uni_paderborn.fujaba.modelinstance,
  org.storydriven.storydiagrams.activities
+Automatic-Module-Name: org.palladiosimulator.simulizar.reconfiguration.storydiagrams.exploration

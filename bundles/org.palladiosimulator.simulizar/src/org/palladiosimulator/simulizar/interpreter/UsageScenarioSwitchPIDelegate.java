@@ -6,11 +6,9 @@ import org.palladiosimulator.pcm.usagemodel.AbstractUserAction;
 import org.palladiosimulator.pcm.usagemodel.Branch;
 import org.palladiosimulator.pcm.usagemodel.BranchTransition;
 import org.palladiosimulator.pcm.usagemodel.Delay;
-import org.palladiosimulator.pcm.usagemodel.EntryLevelSystemCall;
 import org.palladiosimulator.pcm.usagemodel.Loop;
 import org.palladiosimulator.pcm.usagemodel.ScenarioBehaviour;
 import org.palladiosimulator.pcm.usagemodel.Start;
-import org.palladiosimulator.pcm.usagemodel.UsageScenario;
 import org.palladiosimulator.simulizar.utils.TransitionDeterminer;
 
 

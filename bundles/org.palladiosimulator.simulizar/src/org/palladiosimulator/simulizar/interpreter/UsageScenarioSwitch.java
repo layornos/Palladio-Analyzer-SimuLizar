@@ -17,6 +17,7 @@ import org.palladiosimulator.simulizar.interpreter.listener.EventType;
 import org.palladiosimulator.simulizar.interpreter.listener.ModelElementPassedEvent;
 import org.palladiosimulator.simulizar.utils.SimulatedStackHelper;
 import org.palladiosimulator.simulizar.utils.TransitionDeterminer;
+import org.eclipse.emf.ecore.EObject;
 
 import de.uka.ipd.sdq.simucomframework.variables.StackContext;
 
@@ -33,9 +34,9 @@ public class UsageScenarioSwitch<T> extends UsagemodelSwitch<T> {
 
     protected static final Logger LOGGER = Logger.getLogger(UsageScenarioSwitch.class.getName());
 
-    private final InterpreterDefaultContext context;
     private final TransitionDeterminer transitionDeterminer;
-
+    private final UsageScenarioSwitchDeltaDelegate delegateDelta;
+    private final UsageScenarioSwitchPIDelegate delegatePI;
     /**
      * Constructor
      *
@@ -43,8 +44,19 @@ public class UsageScenarioSwitch<T> extends UsagemodelSwitch<T> {
      *            the corresponding pcm model interpreter holding this switch..
      */
     public UsageScenarioSwitch(final InterpreterDefaultContext context) {
-        this.context = context;
         this.transitionDeterminer = new TransitionDeterminer(context);
+        this.delegateDelta = new UsageScenarioSwitchDeltaDelegate(context, new DoSwitchInterface<T>(){
+            @Override
+            public T doSwitch(EObject theEObject) {
+                return this.doSwitch(theEObject);
+            }
+        });
+        this.delegatePI = new UsageScenarioSwitchPIDelegate(context,LOGGER,new DoSwitchInterface<T>(){
+            @Override
+            public T doSwitch(EObject theEObject) {
+                return this.doSwitch(theEObject);
+            }
+        });
     }
 
     /**
@@ -52,13 +64,7 @@ public class UsageScenarioSwitch<T> extends UsagemodelSwitch<T> {
      */
     @Override
     public T caseBranch(final Branch object) {
-        // determine branch transition
-        final BranchTransition branchTransition = this.transitionDeterminer
-                .determineBranchTransition(object.getBranchTransitions_Branch());
-
-        // interpret scenario behaviour of branch transition
-        this.doSwitch(branchTransition.getBranchedBehaviour_BranchTransition());
-
+        delegatePI.caseBranch(object);
         return super.caseBranch(object);
     }
 
@@ -67,19 +73,7 @@ public class UsageScenarioSwitch<T> extends UsagemodelSwitch<T> {
      */
     @Override
     public T caseDelay(final Delay object) {
-        // determine delay
-        final double delay = StackContext.evaluateStatic(object.getTimeSpecification_Delay().getSpecification(),
-                Double.class);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Start delay " + delay + " @ simulation time "
-                    + this.context.getModel().getSimulationControl().getCurrentSimulationTime());
-        }
-        // hold simulation process
-        this.context.getThread().hold(delay);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Continue user @ simulation time "
-                    + this.context.getModel().getSimulationControl().getCurrentSimulationTime());
-        }
+        delegatePI.caseDelay(object);
         return super.caseDelay(object);
     }
 
@@ -88,39 +82,7 @@ public class UsageScenarioSwitch<T> extends UsagemodelSwitch<T> {
      */
     @Override
     public T caseEntryLevelSystemCall(final EntryLevelSystemCall entryLevelSystemCall) {
-        final RepositoryComponentSwitch providedDelegationSwitch = new RepositoryComponentSwitch(this.context,
-                RepositoryComponentSwitch.SYSTEM_ASSEMBLY_CONTEXT,
-                entryLevelSystemCall.getOperationSignature__EntryLevelSystemCall(),
-                entryLevelSystemCall.getProvidedRole_EntryLevelSystemCall());
-
-        this.context.getRuntimeState().getEventNotificationHelper()
-                .firePassedEvent(new ModelElementPassedEvent<EntryLevelSystemCall>(entryLevelSystemCall,
-                        EventType.BEGIN, this.context));
-
-        // FIXME We stick to single model elements here even though several would be needed to
-        // uniquely identify the measuring point of interest (system + role + signature) [Lehrig]
-        this.context.getRuntimeState().getEventNotificationHelper()
-                .firePassedEvent(new ModelElementPassedEvent<OperationSignature>(
-                        entryLevelSystemCall.getOperationSignature__EntryLevelSystemCall(), EventType.BEGIN,
-                        this.context));
-
-        // create new stack frame for input parameter
-        SimulatedStackHelper.createAndPushNewStackFrame(this.context.getStack(),
-                entryLevelSystemCall.getInputParameterUsages_EntryLevelSystemCall());
-        providedDelegationSwitch.doSwitch(entryLevelSystemCall.getProvidedRole_EntryLevelSystemCall());
-        this.context.getStack().removeStackFrame();
-
-        this.context.getRuntimeState().getEventNotificationHelper()
-                .firePassedEvent(new ModelElementPassedEvent<EntryLevelSystemCall>(entryLevelSystemCall, EventType.END,
-                        this.context));
-
-        // FIXME We stick to single model elements here even though several would be needed to
-        // uniquely identify the measuring point of interest (system + role + signature) [Lehrig]
-        this.context.getRuntimeState().getEventNotificationHelper()
-                .firePassedEvent(new ModelElementPassedEvent<OperationSignature>(
-                        entryLevelSystemCall.getOperationSignature__EntryLevelSystemCall(), EventType.END,
-                        this.context));
-
+        delegateDelta.caseEntryLevelSystemCall(entryLevelSystemCall);
         return super.caseEntryLevelSystemCall(entryLevelSystemCall);
     }
 
@@ -129,15 +91,7 @@ public class UsageScenarioSwitch<T> extends UsagemodelSwitch<T> {
      */
     @Override
     public T caseLoop(final Loop object) {
-        // determine number of loops
-        final int numberOfLoops = StackContext.evaluateStatic(object.getLoopIteration_Loop().getSpecification(),
-                Integer.class);
-        for (int i = 0; i < numberOfLoops; i++) {
-            LOGGER.debug("Interpret loop number " + i);
-            this.doSwitch(object.getBodyBehaviour_Loop());
-            LOGGER.debug("Finished loop number " + i);
-
-        }
+        delegatePI.caseLoop(object);
         return super.caseLoop(object);
     }
 
@@ -146,14 +100,7 @@ public class UsageScenarioSwitch<T> extends UsagemodelSwitch<T> {
      */
     @Override
     public T caseScenarioBehaviour(final ScenarioBehaviour object) {
-        // interpret start user action
-        for (final AbstractUserAction abstractUserAction : object.getActions_ScenarioBehaviour()) {
-            if (abstractUserAction instanceof Start) {
-                this.doSwitch(abstractUserAction);
-                break;
-            }
-        }
-
+        delegatePI.caseScenarioBehaviour(object);
         return super.caseScenarioBehaviour(object);
     }
 
@@ -182,34 +129,16 @@ public class UsageScenarioSwitch<T> extends UsagemodelSwitch<T> {
     /**
      * @see org.palladiosimulator.pcm.usagemodel.util.UsagemodelSwitch#caseAbstractUserAction(org.palladiosimulator.pcm.usagemodel.AbstractUserAction)
      */
-    @Override
     public T caseAbstractUserAction(final AbstractUserAction object) {
-        if (object.getSuccessor() != null) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Interpret " + object.getSuccessor().eClass().getName() + ": " + object);
-            }
-            this.doSwitch(object.getSuccessor());
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Finished Interpretation of " + object.getSuccessor().eClass().getName() + ": " + object);
-            }
-        }
+        delegatePI.caseAbstractUserAction(object);
         return super.caseAbstractUserAction(object);
     }
 
     /**
      * @see org.palladiosimulator.pcm.usagemodel.util.UsagemodelSwitch#caseUsageScenario(org.palladiosimulator.pcm.usagemodel.UsageScenario)
      */
-    @Override
     public T caseUsageScenario(final UsageScenario usageScenario) {
-        this.context.getRuntimeState().getEventNotificationHelper().firePassedEvent(
-                new ModelElementPassedEvent<UsageScenario>(usageScenario, EventType.BEGIN, this.context));
-        final int stacksize = this.context.getStack().size();
-        this.doSwitch(usageScenario.getScenarioBehaviour_UsageScenario());
-        if (this.context.getStack().size() != stacksize) {
-            throw new PCMModelInterpreterException("Interpreter did not pop all pushed stackframes");
-        }
-        this.context.getRuntimeState().getEventNotificationHelper().firePassedEvent(
-                new ModelElementPassedEvent<UsageScenario>(usageScenario, EventType.END, this.context));
+        delegateDelta.caseUsageScenario(usageScenario);
         return super.caseUsageScenario(usageScenario);
     }
 }

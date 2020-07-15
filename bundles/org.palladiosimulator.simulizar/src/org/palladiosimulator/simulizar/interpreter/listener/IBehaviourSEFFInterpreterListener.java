@@ -2,8 +2,7 @@ package org.palladiosimulator.simulizar.interpreter.listener;
 
 import org.palladiosimulator.pcm.seff.ExternalCallAction;
 
-public interface IExternalCallInterpretation {
-  
+public interface IBehaviourSEFFInterpreterListener {
   public default void beginExternalCallInterpretation(RDSEFFElementPassedEvent<ExternalCallAction> event) {
 
   }

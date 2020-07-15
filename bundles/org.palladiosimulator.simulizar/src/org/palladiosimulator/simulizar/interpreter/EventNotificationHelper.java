@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import org.palladiosimulator.simulizar.interpreter.listener.ModelElementPassedEvent;
+import org.palladiosimulator.commons.designpatterns.AbstractObservable;
+import org.palladiosimulator.simulizar.interpreter.listener.IInterpreterListener;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -16,7 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * @author snowball, Sebastian Krach
  *
  */
-public class EventNotificationHelper {
+public class EventNotificationHelper extends AbstractObservable<IInterpreterListener> {
 		private final List<Runnable> removeObservable = new ArrayList<>();
 		private final List<Function<EObject, Optional<Consumer<ModelElementPassedEvent<? extends EObject>>>>> NOTIFICATOR_SELECTOR_SWITCHES = new ArrayList<>();
 		public EventNotificationHelper() {
@@ -26,10 +29,10 @@ public class EventNotificationHelper {
 			removeObservable.add(helper1::removeAllObserver);
 			removeObservable.add(helper2::removeAllObserver);
 			removeObservable.add(helper3::removeAllObserver);
+
 			NOTIFICATOR_SELECTOR_SWITCHES.add(helper1.getUsageMModelNotificatorSelector()::doSwitch);
 			NOTIFICATOR_SELECTOR_SWITCHES.add(helper2.getRepositoryNotificatorSelector()::doSwitch);
 			NOTIFICATOR_SELECTOR_SWITCHES.add(helper3.getSeffNotificatorSelector()::doSwitch);
-
 		}
 		
     
@@ -44,4 +47,5 @@ public class EventNotificationHelper {
     public void removeAllListener() {
 			removeObservable.forEach(v->v.run());
 	}
+
 }

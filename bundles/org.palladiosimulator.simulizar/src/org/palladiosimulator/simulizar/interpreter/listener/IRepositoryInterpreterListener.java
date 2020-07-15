@@ -4,7 +4,7 @@ import org.palladiosimulator.pcm.repository.OperationSignature;
 import org.palladiosimulator.pcm.repository.ProvidedRole;
 import org.palladiosimulator.pcm.repository.Signature;
 
-public interface IRepositoryInterpreterListener {
+public interface IRepositoryInterpreterListener  {
   public default void beginSystemOperationCallInterpretation(
       ModelElementPassedEvent<OperationSignature> event) {
 

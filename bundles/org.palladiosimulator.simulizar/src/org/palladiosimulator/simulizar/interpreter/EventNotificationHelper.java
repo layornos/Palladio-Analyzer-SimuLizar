@@ -11,7 +11,10 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import org.palladiosimulator.simulizar.interpreter.listener.ModelElementPassedEvent;
 import org.palladiosimulator.commons.designpatterns.AbstractObservable;
-import org.palladiosimulator.simulizar.interpreter.listener.IInterpreterListener;
+import org.palladiosimulator.simulizar.interpreter.listener.IUsageModelInterpreterListener;
+import org.palladiosimulator.simulizar.interpreter.listener.IUnknownElementInterpretation;
+import org.palladiosimulator.simulizar.interpreter.listener.IRepositoryInterpreterListener;
+import org.palladiosimulator.simulizar.interpreter.listener.IBehaviourSEFFInterpreterListener;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -19,33 +22,38 @@ import org.eclipse.emf.ecore.EObject;
  * @author snowball, Sebastian Krach
  *
  */
-public class EventNotificationHelper extends AbstractObservable<IInterpreterListener> {
-		private final List<Runnable> removeObservable = new ArrayList<>();
-		private final List<Function<EObject, Optional<Consumer<ModelElementPassedEvent<? extends EObject>>>>> NOTIFICATOR_SELECTOR_SWITCHES = new ArrayList<>();
-		public EventNotificationHelper() {
-			UsageModelNotificationHelper helper1 = new UsageModelNotificationHelper();	
-			RepositoryNotificationHelper helper2 = new RepositoryNotificationHelper();	
-			SeffNotificatorHelper helper3 = new SeffNotificatorHelper(); 				
-			removeObservable.add(helper1::removeAllObserver);
-			removeObservable.add(helper2::removeAllObserver);
-			removeObservable.add(helper3::removeAllObserver);
+public class EventNotificationHelper {
+		private List<IObservableNotificationHelper> observableNotificationHelper = new ArrayList<>();
+		private IObservableNotificationHelper helper1 = new UsageModelNotificationHelper();	
+		private IObservableNotificationHelper helper2 = new RepositoryNotificationHelper();	
+		private IObservableNotificationHelper helper3 = new SeffNotificatorHelper();
+		private IObservableNotificationHelper unkownElementNotificatorHelper = new UnkownElementNotificatorHelper();
 
-			NOTIFICATOR_SELECTOR_SWITCHES.add(helper1.getUsageMModelNotificatorSelector()::doSwitch);
-			NOTIFICATOR_SELECTOR_SWITCHES.add(helper2.getRepositoryNotificatorSelector()::doSwitch);
-			NOTIFICATOR_SELECTOR_SWITCHES.add(helper3.getSeffNotificatorSelector()::doSwitch);
+		public EventNotificationHelper() {
+			//TODO: wegen guice entsorgen @MartinWitt
+			observableNotificationHelper.add(helper1);
+			observableNotificationHelper.add(helper2);
+			observableNotificationHelper.add(helper3);
 		}
-		
+		public EventNotificationHelper(List<IObservableNotificationHelper> notificationHelper) {
+			observableNotificationHelper = notificationHelper;
+
+		}
     
     public <T extends EObject> void firePassedEvent(final ModelElementPassedEvent<T> event) {
-		NOTIFICATOR_SELECTOR_SWITCHES.stream()
-			.map(sw -> sw.apply(event.getModelElement()))
+			observableNotificationHelper.stream()
+			.map(sw -> sw.doSwitch(event.getModelElement()))
 			.filter(Optional::isPresent).map(Optional::get).findFirst()
-			.orElse(new UnkownElementNotificatorListener().getUnkownElementNotificatorSelector())
+			.orElse(unkownElementNotificatorHelper.doSwitch(event.getModelElement()).get())
 			.accept(event);
     }
     
     public void removeAllListener() {
-			removeObservable.forEach(v->v.run());
+			observableNotificationHelper.forEach(v-> v.removeAllObserver());
+			unkownElementNotificatorHelper.removeAllObserver();
+	}
+	public void addObserver(Object observer){
+		observableNotificationHelper.forEach(v-> v.registerObserver(observer));
 	}
 
 }

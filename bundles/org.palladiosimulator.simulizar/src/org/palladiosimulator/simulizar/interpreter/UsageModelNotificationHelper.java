@@ -11,7 +11,11 @@ import org.palladiosimulator.pcm.usagemodel.util.UsagemodelSwitch;
 import org.palladiosimulator.commons.designpatterns.AbstractObservable;
 import org.palladiosimulator.pcm.usagemodel.UsageScenario;
 import org.palladiosimulator.simulizar.interpreter.listener.IUsageModelInterpreterListener;
-public class UsageModelNotificationHelper extends AbstractObservable<IUsageModelInterpreterListener> {
+public class UsageModelNotificationHelper extends AbstractObservable<IUsageModelInterpreterListener> implements IObservableNotificationHelper {
+
+  public void registerObserver(IUsageModelInterpreterListener observer) {
+    this.addObserver(observer);
+  }
   
 
       private UsagemodelSwitch<Optional<Consumer<ModelElementPassedEvent<? extends EObject>>>> USAGE_MODEL_NOTIFICATOR_SELECTOR = new UsagemodelSwitch<Optional<Consumer<ModelElementPassedEvent<? extends EObject>>>>() {
@@ -39,11 +43,8 @@ public class UsageModelNotificationHelper extends AbstractObservable<IUsageModel
         };
         };
 
-        /**
-         * @return the uSAGE_MODEL_NOTIFICATOR_SELECTOR
-         */
-        public UsagemodelSwitch<Optional<Consumer<ModelElementPassedEvent<? extends EObject>>>> getUsageMModelNotificatorSelector() {
-          return USAGE_MODEL_NOTIFICATOR_SELECTOR;
+        public Optional<Consumer<ModelElementPassedEvent<? extends EObject>>>  doSwitch(EObject theEObject) {
+          return USAGE_MODEL_NOTIFICATOR_SELECTOR.doSwitch(theEObject);
         }
         
 }

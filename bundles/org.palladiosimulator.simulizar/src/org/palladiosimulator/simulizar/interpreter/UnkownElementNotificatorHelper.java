@@ -1,22 +1,26 @@
 package org.palladiosimulator.simulizar.interpreter;
 
+import java.util.Optional;
 import org.palladiosimulator.commons.designpatterns.AbstractObservable;
 import org.palladiosimulator.simulizar.interpreter.listener.ModelElementPassedEvent;
 import org.palladiosimulator.simulizar.interpreter.listener.IUnknownElementInterpretation;
 import org.eclipse.emf.ecore.EObject;
 import java.util.function.Consumer;
 
-public class UnkownElementNotificatorListener  extends AbstractObservable<IUnknownElementInterpretation> {
+public class UnkownElementNotificatorHelper  extends AbstractObservable<IUnknownElementInterpretation> implements IObservableNotificationHelper {
+
+  public void registerObserver(IUnknownElementInterpretation observer) {
+    this.addObserver(observer);
+  }
 
   private Consumer<ModelElementPassedEvent<? extends EObject>> UNKNOWN_ELEMENT_NOTIFICATOR_SELECTOR =
   new BeginEndSwitch().apply(
     ((ModelElementPassedEvent<? extends EObject> ev) -> getEventDispatcher().beginUnknownElementInterpretation(ev)),
     ((ModelElementPassedEvent<? extends EObject> ev) -> getEventDispatcher().endUnknownElementInterpretation(ev))
     );
-    /**
-     * @return the uNKNOWN_ELEMENT_NOTIFICATOR_SELECTOR
-     */
-    public Consumer<ModelElementPassedEvent<? extends EObject>> getUnkownElementNotificatorSelector() {
-      return UNKNOWN_ELEMENT_NOTIFICATOR_SELECTOR;
-    }
+
+    public Optional<Consumer<ModelElementPassedEvent<? extends EObject>>> doSwitch(EObject theEObject) {
+      return Optional.of(UNKNOWN_ELEMENT_NOTIFICATOR_SELECTOR);
+      }
+
 }

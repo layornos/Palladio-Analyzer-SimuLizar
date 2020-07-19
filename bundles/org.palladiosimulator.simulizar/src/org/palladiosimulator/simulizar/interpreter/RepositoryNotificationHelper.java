@@ -13,7 +13,11 @@ import org.palladiosimulator.simulizar.interpreter.BeginEndSwitch;
 import org.palladiosimulator.pcm.repository.util.RepositorySwitch;
 import org.palladiosimulator.simulizar.interpreter.listener.AssemblyProvidedOperationPassedEvent;
 
-public class RepositoryNotificationHelper extends AbstractObservable<IRepositoryInterpreterListener> {
+public class RepositoryNotificationHelper extends AbstractObservable<IRepositoryInterpreterListener> implements IObservableNotificationHelper {
+
+  public void registerObserver(IRepositoryInterpreterListener observer) {
+    this.addObserver(observer);
+  }
 
   private RepositorySwitch<Optional<Consumer<ModelElementPassedEvent<? extends EObject>>>> REPOSITORY_NOTIFICATOR_SELECTOR = new RepositorySwitch<Optional<Consumer<ModelElementPassedEvent<? extends EObject>>>>() {
     public Optional<Consumer<ModelElementPassedEvent<? extends EObject>>> caseOperationSignature(OperationSignature object) {
@@ -39,10 +43,7 @@ public class RepositoryNotificationHelper extends AbstractObservable<IRepository
   };
   };
 
-  /**
-   * @return the rEPOSITORY_NOTIFICATOR_SELECTOR
-   */
-  public RepositorySwitch<Optional<Consumer<ModelElementPassedEvent<? extends EObject>>>> getRepositoryNotificatorSelector() {
-    return REPOSITORY_NOTIFICATOR_SELECTOR;
+  public Optional<Consumer<ModelElementPassedEvent<? extends EObject>>>  doSwitch(EObject theEObject) {
+    return REPOSITORY_NOTIFICATOR_SELECTOR.doSwitch(theEObject);
   }
 }

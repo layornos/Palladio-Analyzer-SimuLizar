@@ -10,9 +10,13 @@ import org.palladiosimulator.simulizar.interpreter.BeginEndSwitch;
 import org.palladiosimulator.simulizar.interpreter.listener.ModelElementPassedEvent;
 import org.palladiosimulator.simulizar.interpreter.listener.RDSEFFElementPassedEvent;
 import org.palladiosimulator.simulizar.interpreter.listener.IBehaviourSEFFInterpreterListener;
+import org.palladiosimulator.simulizar.interpreter.IObservableNotificationHelper;
 
-public class SeffNotificatorHelper extends AbstractObservable<IBehaviourSEFFInterpreterListener> {
+public class SeffNotificatorHelper extends AbstractObservable<IBehaviourSEFFInterpreterListener> implements IObservableNotificationHelper {
 
+  public void registerObserver(IBehaviourSEFFInterpreterListener observer) {
+    this.addObserver(observer);
+  }
   private SeffSwitch<Optional<Consumer<ModelElementPassedEvent<? extends EObject>>>> SEFF_NOTIFICATOR_SELECTOR = new SeffSwitch<Optional<Consumer<ModelElementPassedEvent<? extends EObject>>>> () {
     public Optional<Consumer<ModelElementPassedEvent<? extends EObject>>> caseExternalCallAction(ExternalCallAction object) {
       return Optional.of(
@@ -27,10 +31,7 @@ public class SeffNotificatorHelper extends AbstractObservable<IBehaviourSEFFInte
       return Optional.empty();
   };
   };
-  /**
-   * @return the sEFF_NOTIFICATOR_SELECTOR
-   */
-  public SeffSwitch<Optional<Consumer<ModelElementPassedEvent<? extends EObject>>>> getSeffNotificatorSelector() {
-    return SEFF_NOTIFICATOR_SELECTOR;
+  public Optional<Consumer<ModelElementPassedEvent<? extends EObject>>>  doSwitch(EObject theEObject) {
+    return SEFF_NOTIFICATOR_SELECTOR.doSwitch(theEObject);
   }
 }

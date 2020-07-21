@@ -9,9 +9,9 @@ import org.eclipse.emf.ecore.EObject;
  * @author snowball
  *
  */
-public class LogDebugListener {
+public interface ILogDebugListener extends IListener {
 
-    private static final Logger LOGGER = Logger.getLogger(LogDebugListener.class);
+    static final Logger LOGGER = Logger.getLogger(ILogDebugListener.class);
 
    public static <T extends EObject> void logEvent(final ModelElementPassedEvent<T> event) {
         if (LOGGER.isDebugEnabled()) {

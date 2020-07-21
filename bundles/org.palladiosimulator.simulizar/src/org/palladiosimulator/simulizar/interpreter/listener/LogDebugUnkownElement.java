@@ -6,11 +6,11 @@ public class LogDebugUnkownElement implements IUnknownElementInterpretation {
   
   @Override
   public <T extends EObject> void beginUnknownElementInterpretation(final ModelElementPassedEvent<T> event) {
-    LogDebugListener.logEvent(event);
+    ILogDebugListener.logEvent(event);
   }
 
   @Override
   public <T extends EObject> void endUnknownElementInterpretation(final ModelElementPassedEvent<T> event) {
-    LogDebugListener.logEvent(event);
+    ILogDebugListener.logEvent(event);
   }
 }

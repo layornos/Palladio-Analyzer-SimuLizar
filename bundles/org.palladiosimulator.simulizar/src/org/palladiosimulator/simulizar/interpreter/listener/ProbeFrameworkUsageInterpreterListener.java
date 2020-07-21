@@ -15,11 +15,11 @@ import org.palladiosimulator.simulizar.utils.PCMPartitionManager;
 import de.uka.ipd.sdq.simucomframework.model.SimuComModel;
 import de.uka.ipd.sdq.simucomframework.resources.CalculatorHelper;
 
-public class ProbeFrameworkListener extends AbstractProbeFrameworkListener {
+public class ProbeFrameworkUsageInterpreterListener extends AbstractProbeUsageInterpreter {
 
-	private static final Logger LOGGER = Logger.getLogger(ProbeFrameworkListener.class);
-	
-	public ProbeFrameworkListener(PCMPartitionManager pcmPartitionManager, SimuComModel simuComModel,
+	private static final Logger LOGGER = Logger.getLogger(ProbeFrameworkUsageInterpreterListener.class);
+
+	public ProbeFrameworkUsageInterpreterListener(PCMPartitionManager pcmPartitionManager, SimuComModel simuComModel,
 			Reconfigurator reconfigurator) {
 		super(pcmPartitionManager, simuComModel, reconfigurator);
 	}

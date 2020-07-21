@@ -7,11 +7,11 @@ public class LogDebugBehaviourSeff implements IBehaviourSEFFInterpreterListener 
   
   @Override
   public  void beginExternalCallInterpretation(RDSEFFElementPassedEvent<ExternalCallAction> event) {
-    LogDebugListener.logEvent(event);
+    ILogDebugListener.logEvent(event);
   }
   @Override
   public  void endExternalCallInterpretation(RDSEFFElementPassedEvent<ExternalCallAction> event) {
-    LogDebugListener.logEvent(event);
+    ILogDebugListener.logEvent(event);
   }
 
 }

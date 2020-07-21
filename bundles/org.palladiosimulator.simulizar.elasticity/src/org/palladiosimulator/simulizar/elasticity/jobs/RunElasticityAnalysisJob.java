@@ -15,7 +15,7 @@ import org.palladiosimulator.probeframework.calculator.DefaultCalculatorProbeSet
 import org.palladiosimulator.probeframework.probes.Probe;
 import org.palladiosimulator.simulizar.elasticity.aggregator.ReconfigurationTimeAggregatorWithConfidence;
 import org.palladiosimulator.simulizar.interpreter.listener.AbstractProbeFrameworkListener;
-import org.palladiosimulator.simulizar.interpreter.listener.LogDebugListener;
+import org.palladiosimulator.simulizar.interpreter.listener.ILogDebugListener;
 import org.palladiosimulator.simulizar.launcher.IConfigurator;
 import org.palladiosimulator.simulizar.launcher.SimulizarConstants;
 import org.palladiosimulator.simulizar.launcher.jobs.LoadSimuLizarModelsIntoBlackboardJob;
@@ -53,7 +53,9 @@ public class RunElasticityAnalysisJob implements IBlackboardInteractingJob<MDSDB
 	private static final double ONE_HUNDERT_PERCENT = 100.0;
 
 	private LoadSimuLizarModelsIntoBlackboardJob loadSimuLizarModelsIntoBlackboardJob;
-
+	
+	private List<ILogDebugListener> logDebugListener;
+	private List<AbstractProbeFrameworkListener> probeFrameworkListeners;
 	/**
 	 * Constructor
 	 *
@@ -149,7 +151,7 @@ public class RunElasticityAnalysisJob implements IBlackboardInteractingJob<MDSDB
 		@Override
 		protected void initializeInterpreterListeners(Reconfigurator reconfigurator) {
 			LOGGER.debug("Adding Debug and monitoring interpreter listeners");
-	        this.eventHelper.addObserver(new LogDebugListener());
+	        logDebugListener.forEach(eventHelper::addObserver);
 	        this.eventHelper.addObserver(new ProbeFrameworkListenerForElasticity(this.getPCMPartitionManager(),  this.getModel(), reconfigurator));
 		}
 

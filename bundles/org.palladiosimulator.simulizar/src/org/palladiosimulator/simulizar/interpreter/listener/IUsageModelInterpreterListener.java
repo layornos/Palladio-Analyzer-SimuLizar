@@ -3,7 +3,7 @@ package org.palladiosimulator.simulizar.interpreter.listener;
 import org.palladiosimulator.pcm.usagemodel.UsageScenario;
 import org.palladiosimulator.pcm.usagemodel.EntryLevelSystemCall;
 
-public interface IUsageModelInterpreterListener {
+public interface IUsageModelInterpreterListener extends IListener {
 
   public default void beginUsageScenarioInterpretation(ModelElementPassedEvent<UsageScenario> event) {
 

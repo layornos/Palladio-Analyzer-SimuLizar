@@ -1,6 +1,5 @@
 package org.palladiosimulator.simulizar.interpreter.listener;
 
-import org.palladiosimulator.simulizar.interpreter.listener.IBehaviourSEFFInterpreterListener;
 import org.palladiosimulator.pcm.seff.ExternalCallAction;
 
 public class LogDebugBehaviourSeff implements IBehaviourSEFFInterpreterListener {

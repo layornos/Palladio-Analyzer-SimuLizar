@@ -3,10 +3,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import de.uka.ipd.sdq.simucomframework.SimuComConfig;
-import org.palladiosimulator.pcm.usagemodel.BranchTransition;
-import org.palladiosimulator.simulizar.utils.MathUtils;
 import org.eclipse.emf.common.util.EList;
+import org.palladiosimulator.pcm.usagemodel.BranchTransition;
+
+import de.uka.ipd.sdq.simucomframework.SimuComConfig;
 
 public class TransitionDeterminerPIUsageDelegate {
 

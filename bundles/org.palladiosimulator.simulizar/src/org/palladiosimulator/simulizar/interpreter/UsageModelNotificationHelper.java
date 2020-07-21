@@ -4,13 +4,12 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 import org.eclipse.emf.ecore.EObject;
-import org.palladiosimulator.simulizar.interpreter.listener.ModelElementPassedEvent;
-import org.palladiosimulator.simulizar.interpreter.BeginEndSwitch;
-import org.palladiosimulator.pcm.usagemodel.EntryLevelSystemCall;
-import org.palladiosimulator.pcm.usagemodel.util.UsagemodelSwitch;
 import org.palladiosimulator.commons.designpatterns.AbstractObservable;
+import org.palladiosimulator.pcm.usagemodel.EntryLevelSystemCall;
 import org.palladiosimulator.pcm.usagemodel.UsageScenario;
+import org.palladiosimulator.pcm.usagemodel.util.UsagemodelSwitch;
 import org.palladiosimulator.simulizar.interpreter.listener.IUsageModelInterpreterListener;
+import org.palladiosimulator.simulizar.interpreter.listener.ModelElementPassedEvent;
 public class UsageModelNotificationHelper extends AbstractObservable<IUsageModelInterpreterListener> implements IObservableNotificationHelper {
 
   public void registerObserver(Object observer) {

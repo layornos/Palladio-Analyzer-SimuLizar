@@ -9,7 +9,6 @@ import org.palladiosimulator.simulizar.interpreter.listener.IRepositoryInterpret
 import org.palladiosimulator.commons.designpatterns.AbstractObservable;
 import org.palladiosimulator.pcm.repository.OperationSignature;
 import org.palladiosimulator.pcm.repository.OperationProvidedRole;
-import org.palladiosimulator.simulizar.interpreter.BeginEndSwitch;
 import org.palladiosimulator.pcm.repository.util.RepositorySwitch;
 import org.palladiosimulator.simulizar.interpreter.listener.AssemblyProvidedOperationPassedEvent;
 

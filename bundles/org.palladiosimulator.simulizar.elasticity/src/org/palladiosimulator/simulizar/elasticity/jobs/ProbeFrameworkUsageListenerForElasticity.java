@@ -2,8 +2,6 @@ package org.palladiosimulator.simulizar.elasticity.jobs;
 
 import static org.palladiosimulator.metricspec.constants.MetricDescriptionConstants.RECONFIGURATION_TIME_METRIC_TUPLE;
 
-import javax.swing.text.html.HTMLDocument.RunElement;
-
 import org.apache.log4j.Logger;
 import org.palladiosimulator.edp2.models.measuringpoint.MeasuringPoint;
 import org.palladiosimulator.metricspec.constants.MetricDescriptionConstants;

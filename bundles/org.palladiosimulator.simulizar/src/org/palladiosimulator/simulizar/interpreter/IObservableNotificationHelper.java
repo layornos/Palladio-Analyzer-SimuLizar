@@ -1,10 +1,9 @@
 package org.palladiosimulator.simulizar.interpreter;
 
-import java.util.List;
-import java.util.function.Function;
-import org.eclipse.emf.ecore.EObject;
-import java.util.function.Consumer;
 import java.util.Optional;
+import java.util.function.Consumer;
+
+import org.eclipse.emf.ecore.EObject;
 import org.palladiosimulator.simulizar.interpreter.listener.ModelElementPassedEvent;
 
 public interface IObservableNotificationHelper  {

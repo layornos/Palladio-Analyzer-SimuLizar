@@ -1,16 +1,15 @@
 package org.palladiosimulator.simulizar.interpreter;
 
 import java.util.Optional;
+import java.util.function.Consumer;
+
 import org.eclipse.emf.ecore.EObject;
 import org.palladiosimulator.commons.designpatterns.AbstractObservable;
 import org.palladiosimulator.pcm.seff.ExternalCallAction;
 import org.palladiosimulator.pcm.seff.util.SeffSwitch;
-import java.util.function.Consumer;
-import org.palladiosimulator.simulizar.interpreter.BeginEndSwitch;
+import org.palladiosimulator.simulizar.interpreter.listener.IBehaviourSEFFInterpreterListener;
 import org.palladiosimulator.simulizar.interpreter.listener.ModelElementPassedEvent;
 import org.palladiosimulator.simulizar.interpreter.listener.RDSEFFElementPassedEvent;
-import org.palladiosimulator.simulizar.interpreter.listener.IBehaviourSEFFInterpreterListener;
-import org.palladiosimulator.simulizar.interpreter.IObservableNotificationHelper;
 
 public class SeffNotificatorHelper extends AbstractObservable<IBehaviourSEFFInterpreterListener> implements IObservableNotificationHelper {
 

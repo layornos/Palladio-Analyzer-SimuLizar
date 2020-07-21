@@ -3,10 +3,9 @@ package org.palladiosimulator.simulizar.interpreter;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 
-import org.palladiosimulator.simulizar.interpreter.listener.ModelElementPassedEvent;
 import org.eclipse.emf.ecore.EObject;
 import org.palladiosimulator.simulizar.interpreter.listener.EventType;
-import org.palladiosimulator.pcm.usagemodel.util.UsagemodelSwitch;
+import org.palladiosimulator.simulizar.interpreter.listener.ModelElementPassedEvent;
 
 public class BeginEndSwitch implements BinaryOperator<Consumer<ModelElementPassedEvent<? extends EObject>>> {
   

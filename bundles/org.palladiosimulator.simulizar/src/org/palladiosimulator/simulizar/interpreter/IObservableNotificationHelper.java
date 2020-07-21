@@ -14,9 +14,7 @@ public interface IObservableNotificationHelper  {
  * Das teil dient dazu, wegen überladung die observer zu verteilen.
  * @param observer
  */
-  public default void registerObserver(Object observer) {
-
-  }
+  public void registerObserver(Object observer);
 
   public Optional<Consumer<ModelElementPassedEvent<? extends EObject>>>  doSwitch(EObject theEObject);
 

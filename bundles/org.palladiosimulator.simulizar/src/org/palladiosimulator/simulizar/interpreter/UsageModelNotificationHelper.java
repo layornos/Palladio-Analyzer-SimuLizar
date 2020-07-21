@@ -14,7 +14,9 @@ import org.palladiosimulator.simulizar.interpreter.listener.IUsageModelInterpret
 public class UsageModelNotificationHelper extends AbstractObservable<IUsageModelInterpreterListener> implements IObservableNotificationHelper {
 
   public void registerObserver(IUsageModelInterpreterListener observer) {
+    if(IUsageModelInterpreterListener.class.isAssignableFrom(observer.getClass()){
     this.addObserver(observer);
+    }
   }
   
 

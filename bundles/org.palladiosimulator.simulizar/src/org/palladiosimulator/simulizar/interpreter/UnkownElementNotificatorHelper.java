@@ -9,8 +9,10 @@ import java.util.function.Consumer;
 
 public class UnkownElementNotificatorHelper  extends AbstractObservable<IUnknownElementInterpretation> implements IObservableNotificationHelper {
 
-  public void registerObserver(IUnknownElementInterpretation observer) {
+  public void registerObserver(Object observer) {
+    if(IUnknownElementInterpretation.class.isAssignableFrom(observer.getClass()){
     this.addObserver(observer);
+    }
   }
 
   private Consumer<ModelElementPassedEvent<? extends EObject>> UNKNOWN_ELEMENT_NOTIFICATOR_SELECTOR =

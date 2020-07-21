@@ -1,36 +1,21 @@
 package org.palladiosimulator.simulizar.elasticity.jobs;
 
-import static org.palladiosimulator.metricspec.constants.MetricDescriptionConstants.RECONFIGURATION_TIME_METRIC_TUPLE;
-
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.palladiosimulator.commons.eclipseutils.ExtensionHelper;
-import org.palladiosimulator.edp2.models.measuringpoint.MeasuringPoint;
-import org.palladiosimulator.metricspec.constants.MetricDescriptionConstants;
-import org.palladiosimulator.monitorrepository.MeasurementSpecification;
-import org.palladiosimulator.probeframework.calculator.Calculator;
-import org.palladiosimulator.probeframework.calculator.DefaultCalculatorProbeSets;
-import org.palladiosimulator.probeframework.probes.Probe;
 import org.palladiosimulator.simulizar.elasticity.aggregator.ReconfigurationTimeAggregatorWithConfidence;
-import org.palladiosimulator.simulizar.interpreter.listener.AbstractProbeFrameworkListener;
 import org.palladiosimulator.simulizar.interpreter.listener.ILogDebugListener;
 import org.palladiosimulator.simulizar.launcher.IConfigurator;
 import org.palladiosimulator.simulizar.launcher.SimulizarConstants;
 import org.palladiosimulator.simulizar.launcher.jobs.LoadSimuLizarModelsIntoBlackboardJob;
 import org.palladiosimulator.simulizar.reconfiguration.Reconfigurator;
-import org.palladiosimulator.simulizar.reconfiguration.probes.TakeReconfigurationDurationProbe;
 import org.palladiosimulator.simulizar.runconfig.SimuLizarWorkflowConfiguration;
 import org.palladiosimulator.simulizar.runtimestate.AbstractSimuLizarRuntimeState;
 import org.palladiosimulator.simulizar.runtimestate.IRuntimeStateAccessor;
 import org.palladiosimulator.simulizar.runtimestate.SimulationCancelationDelegate;
-import org.palladiosimulator.simulizar.utils.PCMPartitionManager;
 
-import de.uka.ipd.sdq.simucomframework.model.SimuComModel;
-import de.uka.ipd.sdq.simucomframework.resources.CalculatorHelper;
-import de.uka.ipd.sdq.statistics.StaticBatchAlgorithm;
-import de.uka.ipd.sdq.statistics.estimation.SampleMeanEstimator;
 import de.uka.ipd.sdq.workflow.jobs.CleanupFailedException;
 import de.uka.ipd.sdq.workflow.jobs.IBlackboardInteractingJob;
 import de.uka.ipd.sdq.workflow.jobs.JobFailedException;
@@ -44,18 +29,18 @@ public class RunElasticityAnalysisJob implements IBlackboardInteractingJob<MDSDB
 
 	private final SimuLizarWorkflowConfiguration configuration;
 
-	private static ReconfigurationTimeAggregatorWithConfidence aggregatorWithConfidence;
+	static ReconfigurationTimeAggregatorWithConfidence aggregatorWithConfidence;
 	
-	public static ProbeFrameworkListenerForElasticity probeFrameworkListener;
 
-	private static int NUMBER_OF_RUNS_LIMIT = 50;
+	static int NUMBER_OF_RUNS_LIMIT = 50;
 
-	private static final double ONE_HUNDERT_PERCENT = 100.0;
+	static final double ONE_HUNDERT_PERCENT = 100.0;
 
 	private LoadSimuLizarModelsIntoBlackboardJob loadSimuLizarModelsIntoBlackboardJob;
 	
 	private List<ILogDebugListener> logDebugListener;
-	private List<AbstractProbeFrameworkListener> probeFrameworkListeners;
+	private List<IListenerForElasticity> probeFrameworkListeners;
+	//TODO: GUICE @MartinWitt
 	/**
 	 * Constructor
 	 *
@@ -152,42 +137,10 @@ public class RunElasticityAnalysisJob implements IBlackboardInteractingJob<MDSDB
 		protected void initializeInterpreterListeners(Reconfigurator reconfigurator) {
 			LOGGER.debug("Adding Debug and monitoring interpreter listeners");
 	        logDebugListener.forEach(eventHelper::addObserver);
-	        this.eventHelper.addObserver(new ProbeFrameworkListenerForElasticity(this.getPCMPartitionManager(),  this.getModel(), reconfigurator));
+	        probeFrameworkListeners.forEach(eventHelper::addObserver);
 		}
 
 	}
 	
-	private class ProbeFrameworkListenerForElasticity extends AbstractProbeFrameworkListener {
-
-		public ProbeFrameworkListenerForElasticity(PCMPartitionManager pcmPartitionManager, SimuComModel simuComModel,
-				Reconfigurator reconfigurator) {
-			super(pcmPartitionManager, simuComModel, reconfigurator);
-		}
-
-		@Override
-		protected void initReconfigurationTimeMeasurement() {
-			for (final MeasurementSpecification reconfigurationTimeMeasurementSpec : this
-					.getMeasurementSpecificationsForMetricDescription(
-							MetricDescriptionConstants.RECONFIGURATION_TIME_METRIC)) {
-				final MeasuringPoint measuringPoint = reconfigurationTimeMeasurementSpec.getMonitor().getMeasuringPoint();
-				final Probe probe = CalculatorHelper.getEventProbeSetWithCurrentTime(RECONFIGURATION_TIME_METRIC_TUPLE,
-						this.getSimuComModel().getSimulationControl(),
-						new TakeReconfigurationDurationProbe(reconfigurator));
-				try {
-					final Calculator calculator = this.calculatorFactory
-					        .buildCalculator(RECONFIGURATION_TIME_METRIC_TUPLE, measuringPoint, 
-					                DefaultCalculatorProbeSets.createSingularProbeConfiguration(probe));
-					calculator.addObserver(RunElasticityAnalysisJob.aggregatorWithConfidence == null ? RunElasticityAnalysisJob.aggregatorWithConfidence = new ReconfigurationTimeAggregatorWithConfidence(
-																								new StaticBatchAlgorithm(5, 5),
-																								new SampleMeanEstimator(), 
-																								this.getSimuComModel().getConfiguration().getConfidenceLevel() / ONE_HUNDERT_PERCENT,
-																								this.getSimuComModel().getConfiguration().getConfidenceHalfWidth() / ONE_HUNDERT_PERCENT) 
-																			: RunElasticityAnalysisJob.aggregatorWithConfidence);
-				} catch (IllegalArgumentException iae) {
-					LOGGER.info("Tried to add a calculator that already exists");
-				}
-			}
-		}
-	}
 	
 }

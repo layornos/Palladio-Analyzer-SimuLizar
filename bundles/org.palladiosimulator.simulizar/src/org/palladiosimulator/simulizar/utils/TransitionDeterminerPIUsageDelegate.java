@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import de.uka.ipd.sdq.simucomframework.SimuComConfig;
 import org.palladiosimulator.pcm.usagemodel.BranchTransition;
-import org.palladiosimulator.simulizar.src.org.palladiosimulator.simulizar.utils.MathUtils;
+import org.palladiosimulator.simulizar.utils.MathUtils;
 import org.eclipse.emf.common.util.EList;
 
 public class TransitionDeterminerPIUsageDelegate {

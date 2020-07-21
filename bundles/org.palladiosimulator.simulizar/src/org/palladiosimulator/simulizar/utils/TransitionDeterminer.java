@@ -11,7 +11,7 @@ import org.palladiosimulator.pcm.seff.GuardedBranchTransition;
 import org.palladiosimulator.pcm.seff.ProbabilisticBranchTransition;
 import org.palladiosimulator.pcm.usagemodel.BranchTransition;
 import org.palladiosimulator.simulizar.interpreter.InterpreterDefaultContext;
-import org.palladiosimulator.simulizar.src.org.palladiosimulator.simulizar.utils.MathUtils;
+import org.palladiosimulator.simulizar.utils.MathUtils;
 import de.uka.ipd.sdq.simucomframework.SimuComConfig;
 
 /**

@@ -15,8 +15,8 @@ import org.palladiosimulator.simulizar.interpreter.IObservableNotificationHelper
 public class SeffNotificatorHelper extends AbstractObservable<IBehaviourSEFFInterpreterListener> implements IObservableNotificationHelper {
 
   public void registerObserver(Object observer) {
-    if(IBehaviourSEFFInterpreterListener.class.isAssignableFrom(observer.getClass()){
-    this.addObserver(observer);
+    if(IBehaviourSEFFInterpreterListener.class.isAssignableFrom(observer.getClass())) {
+    this.addObserver((IBehaviourSEFFInterpreterListener) observer);
     }
   }
   private SeffSwitch<Optional<Consumer<ModelElementPassedEvent<? extends EObject>>>> SEFF_NOTIFICATOR_SELECTOR = new SeffSwitch<Optional<Consumer<ModelElementPassedEvent<? extends EObject>>>> () {

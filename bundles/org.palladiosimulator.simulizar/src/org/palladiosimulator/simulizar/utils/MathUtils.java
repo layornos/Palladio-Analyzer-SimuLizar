@@ -1,4 +1,4 @@
-package org.palladiosimulator.simulizar.src.org.palladiosimulator.simulizar.utils;
+package org.palladiosimulator.simulizar.utils;
 
 import java.util.ArrayList;
 import java.util.List;

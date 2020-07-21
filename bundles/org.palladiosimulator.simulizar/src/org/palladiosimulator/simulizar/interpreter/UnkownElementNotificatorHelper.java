@@ -10,8 +10,8 @@ import java.util.function.Consumer;
 public class UnkownElementNotificatorHelper  extends AbstractObservable<IUnknownElementInterpretation> implements IObservableNotificationHelper {
 
   public void registerObserver(Object observer) {
-    if(IUnknownElementInterpretation.class.isAssignableFrom(observer.getClass()){
-    this.addObserver(observer);
+    if(IUnknownElementInterpretation.class.isAssignableFrom(observer.getClass())) {
+    this.addObserver((IUnknownElementInterpretation) observer);
     }
   }
 

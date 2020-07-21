@@ -16,8 +16,8 @@ import org.palladiosimulator.simulizar.interpreter.listener.AssemblyProvidedOper
 public class RepositoryNotificationHelper extends AbstractObservable<IRepositoryInterpreterListener> implements IObservableNotificationHelper {
 
   public void registerObserver(Object observer) {
-    if(IRepositoryInterpreterListener.class.isAssignableFrom(observer.getClass()){
-    this.addObserver(observer);}
+    if(IRepositoryInterpreterListener.class.isAssignableFrom(observer.getClass())) {
+    this.addObserver((IRepositoryInterpreterListener) observer);}
   }
 
   private RepositorySwitch<Optional<Consumer<ModelElementPassedEvent<? extends EObject>>>> REPOSITORY_NOTIFICATOR_SELECTOR = new RepositorySwitch<Optional<Consumer<ModelElementPassedEvent<? extends EObject>>>>() {

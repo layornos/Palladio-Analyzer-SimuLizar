@@ -11,9 +11,8 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface ILogDebugListener extends IListener {
 
-    static final Logger LOGGER = Logger.getLogger(ILogDebugListener.class);
 
-   public static <T extends EObject> void logEvent(final ModelElementPassedEvent<T> event) {
+   public default <T extends EObject> void logEvent(final ModelElementPassedEvent<T> event, Logger LOGGER) {
         if (LOGGER.isDebugEnabled()) {
             final StringBuilder msgBuilder = new StringBuilder();
             switch (event.getEventType()) {

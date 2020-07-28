@@ -2,6 +2,9 @@ package org.palladiosimulator.simulizar.interpreter;
 
 import org.palladiosimulator.pcm.seff.ExternalCallAction;
 import org.apache.log4j.Logger;
+import org.eclipse.emf.ecore.util.ComposedSwitch;
+import org.eclipse.emf.ecore.util.Switch;
+
 import de.uka.ipd.sdq.simucomframework.variables.stackframe.SimulatedStackframe;
 import org.palladiosimulator.simulizar.utils.SimulatedStackHelper;
 import org.palladiosimulator.analyzer.completions.DelegatingExternalCallAction;
@@ -9,30 +12,36 @@ import org.palladiosimulator.pcm.core.composition.AssemblyContext;
 import org.palladiosimulator.pcm.seff.AcquireAction;
 import org.palladiosimulator.pcm.seff.ReleaseAction;
 import org.palladiosimulator.pcm.seff.SetVariableAction;
+import org.palladiosimulator.pcm.seff.util.SeffSwitch;
 import org.palladiosimulator.simulizar.runtimestate.SimulatedBasicComponentInstance;
 import org.palladiosimulator.simulizar.exceptions.SimulatedStackAccessException;
 import org.palladiosimulator.pcm.seff.CollectionIteratorAction;
 import org.palladiosimulator.pcm.repository.Parameter;
 import de.uka.ipd.sdq.simucomframework.variables.StackContext;
 
-public class RDSeffSwitchBehaviourDeltaSeffDelegate {
+public class RDSeffSwitchDelta extends SeffSwitch<Object> implements IComposableSwitch {
 
   private static final Boolean SUCCESS = true;
   private static final Logger LOGGER =
-      Logger.getLogger(RDSeffSwitchBehaviourDeltaSeffDelegate.class);
+      Logger.getLogger(RDSeffSwitchDelta.class);
   private final InterpreterDefaultContext context;
   private final SimulatedStackframe<Object> resultStackFrame;
   private final SimulatedBasicComponentInstance basicComponentInstance;
-  private final GetParentSwitchInterface getParentSwitch;
+  private ComposedSwitch<Object> parentSwitch;
 
-  public RDSeffSwitchBehaviourDeltaSeffDelegate(InterpreterDefaultContext context,
+  public RDSeffSwitchDelta(InterpreterDefaultContext context,
+	      SimulatedStackframe<Object> resultStackFrame,
+	      SimulatedBasicComponentInstance basicComponentInstance) {
+	    this.resultStackFrame = resultStackFrame;
+	    this.context = context;
+	    this.basicComponentInstance = basicComponentInstance;
+  }
+  public RDSeffSwitchDelta(InterpreterDefaultContext context,
       SimulatedStackframe<Object> resultStackFrame,
       SimulatedBasicComponentInstance basicComponentInstance,
-      GetParentSwitchInterface getParentSwitch) {
-    this.resultStackFrame = resultStackFrame;
-    this.context = context;
-    this.basicComponentInstance = basicComponentInstance;
-    this.getParentSwitch = getParentSwitch;
+      ComposedSwitch<Object> parentSwitch) {
+	  this(context, resultStackFrame, basicComponentInstance);
+    this.parentSwitch = parentSwitch;
   }
 
   /**
@@ -182,7 +191,7 @@ public class RDSeffSwitchBehaviourDeltaSeffDelegate {
        * within an iteration.
        */
 
-      getParentSwitch.getParentSwitch().doSwitch(object.getBodyBehaviour_Loop());
+      getParentSwitch().doSwitch(object.getBodyBehaviour_Loop());
 
       // remove stack frame for value characterisations of inner
       // collection variable
@@ -200,4 +209,13 @@ public class RDSeffSwitchBehaviourDeltaSeffDelegate {
       }
     }
   }
+
+  @Override
+  public Switch<Object> getParentSwitch() {
+      if (this.parentSwitch != null) {
+          return this.parentSwitch;
+      }
+      return this;
+  }
+
 }

@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.util.ComposedSwitch;
 import org.palladiosimulator.pcm.parameter.VariableUsage;
 import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.usagemodel.AbstractUserAction;
@@ -53,7 +54,8 @@ import org.palladiosimulator.simulizar.action.mapping.Mapping;
 import org.palladiosimulator.simulizar.action.parameter.ControllerCallInputVariableUsage;
 import org.palladiosimulator.simulizar.action.parameter.ControllerCallInputVariableUsageCollection;
 import org.palladiosimulator.simulizar.interpreter.InterpreterDefaultContext;
-import org.palladiosimulator.simulizar.interpreter.UsageScenarioSwitch;
+import org.palladiosimulator.simulizar.interpreter.UsageScenarioSwitchDelta;
+import org.palladiosimulator.simulizar.interpreter.UsageScenarioSwitchPi;
 import org.palladiosimulator.simulizar.interpreter.listener.EventResult;
 import org.palladiosimulator.simulizar.reconfiguration.ReconfigurationProcess;
 import org.palladiosimulator.simulizar.reconfiguration.qvto.QvtoModelTransformation;
@@ -387,7 +389,11 @@ public class TransientEffectInterpreter extends CoreSwitch<TransientEffectExecut
 				sysCall.getInputParameterUsages_EntryLevelSystemCall().addAll(variableUsages);
 				start.setSuccessor(sysCall);
 				sysCall.setSuccessor(stop);
-				new UsageScenarioSwitch<Object>(newContext).doSwitch(usageScenario);
+                final ComposedSwitch<Object> usageSwitch = new ComposedSwitch<>();
+                //TODO: guice @MartinWitt
+                usageSwitch.addSwitch(new UsageScenarioSwitchDelta<Object>(newContext,usageSwitch));
+                usageSwitch.addSwitch(new UsageScenarioSwitchPi<Object>(newContext,usageSwitch));
+                usageSwitch.doSwitch(usageScenario);
 				// finally, reschedule the executing process (this is crucial!)
 				// as it is passivated in caseResourceDemandingAction if mapped
 				// calls are running

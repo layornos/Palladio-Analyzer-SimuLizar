@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.ComposedSwitch;
 import org.palladiosimulator.commons.eclipseutils.ExtensionHelper;
 import org.palladiosimulator.pcm.core.composition.AssemblyContext;
 import org.palladiosimulator.pcm.core.composition.ComposedStructure;
@@ -35,6 +36,7 @@ import org.palladiosimulator.simulizar.runtimestate.FQComponentID;
 import org.palladiosimulator.simulizar.runtimestate.SimulatedBasicComponentInstance;
 import org.palladiosimulator.simulizar.runtimestate.SimulatedCompositeComponentInstance;
 import org.palladiosimulator.simulizar.utils.SimulatedStackHelper;
+import org.palladiosimulator.simulizar.utils.TransitionDeterminer;
 
 import de.uka.ipd.sdq.simucomframework.variables.stackframe.SimulatedStack;
 import de.uka.ipd.sdq.simucomframework.variables.stackframe.SimulatedStackframe;
@@ -218,7 +220,13 @@ public class RepositoryComponentSwitch extends RepositorySwitch<SimulatedStackfr
             switchFactories.stream().forEach(s -> interpreter.addSwitch(
             		s.createRDSeffSwitch(this.context, basicComponentInstance, interpreter)));
             // add default RDSeffSwitch
-            interpreter.addSwitch(new RDSeffSwitch(this.context, basicComponentInstance, interpreter));
+            ComposedSwitch<Object> rdSeffSwitch = new ComposedSwitch<>();
+            SimulatedStackframe<Object> stackFrame = new SimulatedStackframe<>();
+            //TODO: @MartinWitt Juice
+            rdSeffSwitch.addSwitch(new RDSeffSwitchDelta(this.context,stackFrame, basicComponentInstance,interpreter));
+            rdSeffSwitch.addSwitch(new RDSeffSwitchPi(this.context, stackFrame, basicComponentInstance,interpreter));
+            interpreter.addSwitch(rdSeffSwitch);
+            //interpreter.addSwitch(new RDSeffSwitch(this.context, basicComponentInstance, interpreter));
             // interpret called seff
             return (SimulatedStackframe<Object>) interpreter.doSwitch(calledSeffs.get(0));
         }

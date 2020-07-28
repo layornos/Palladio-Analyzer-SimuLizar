@@ -3,6 +3,7 @@ package org.palladiosimulator.simulizar.interpreter;
 import org.palladiosimulator.simulizar.utils.SimulatedStackHelper;
 import org.palladiosimulator.simulizar.exceptions.PCMModelAccessException;
 import org.palladiosimulator.pcm.seff.seff_performance.ResourceCall;
+import org.palladiosimulator.pcm.seff.util.SeffSwitch;
 import org.palladiosimulator.pcm.seff.seff_performance.ParametricResourceDemand;
 import org.palladiosimulator.pcm.seff.seff_performance.InfrastructureCall;
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
@@ -23,6 +24,8 @@ import de.uka.ipd.sdq.simucomframework.variables.StackContext;
 import de.uka.ipd.sdq.simucomframework.variables.converter.NumberConverter;
 import de.uka.ipd.sdq.simucomframework.ResourceRegistry;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.util.ComposedSwitch;
+import org.eclipse.emf.ecore.util.Switch;
 import org.palladiosimulator.simulizar.exceptions.PCMModelInterpreterException;
 import org.palladiosimulator.pcm.seff.AbstractBranchTransition;
 import org.palladiosimulator.pcm.seff.BranchAction;
@@ -45,26 +48,32 @@ import java.util.ArrayList;
 import org.palladiosimulator.simulizar.runtimestate.SimulatedBasicComponentInstance;
 
 
-public class RDSeffSwitchPiSeffDelegate {
+public class RDSeffSwitchPi extends SeffSwitch<Object> implements IComposableSwitch {
   private static final Boolean SUCCESS = true;
-  private static final Logger LOGGER = Logger.getLogger(RDSeffSwitchPiSeffDelegate.class);
+  private static final Logger LOGGER = Logger.getLogger(RDSeffSwitchPi.class);
   private final InterpreterDefaultContext context;
   private final Allocation allocation;
-  private final GetParentSwitchInterface getParentSwitch;
   private final TransitionDeterminer transitionDeterminer;
   private final SimulatedStackframe<Object> resultStackFrame;
   private final SimulatedBasicComponentInstance basicComponentInstance;
+  private ComposedSwitch<Object> parentSwitch;
+  
+  public RDSeffSwitchPi(InterpreterDefaultContext context,
+	      SimulatedStackframe<Object> resultStackFrame,
+	      SimulatedBasicComponentInstance basicComponentInstance ) {
+	    this.allocation = context.getLocalPCMModelAtContextCreation().getAllocation();
+	    this.context = context;
+	    this.transitionDeterminer = new TransitionDeterminer(context);
+	    this.resultStackFrame = resultStackFrame;
+	    this.basicComponentInstance = basicComponentInstance;
+	  }
 
-  public RDSeffSwitchPiSeffDelegate(InterpreterDefaultContext context, Allocation allocation,
-      TransitionDeterminer transitionDeterminer, SimulatedStackframe<Object> resultStackFrame,
-      SimulatedBasicComponentInstance basicComponentInstance,
-      GetParentSwitchInterface getParentSwitch) {
-    this.allocation = allocation;
-    this.context = context;
-    this.getParentSwitch = getParentSwitch;
-    this.transitionDeterminer = transitionDeterminer;
-    this.resultStackFrame = resultStackFrame;
-    this.basicComponentInstance = basicComponentInstance;
+  public RDSeffSwitchPi(InterpreterDefaultContext context,
+      SimulatedStackframe<Object> resultStackFrame,
+      SimulatedBasicComponentInstance basicComponentInstance, ComposedSwitch<Object> parentSwitch
+     ) {
+	this(context, resultStackFrame, basicComponentInstance);
+    this.parentSwitch = parentSwitch;
 
   }
 
@@ -271,7 +280,7 @@ public class RDSeffSwitchPiSeffDelegate {
       throw new PCMModelInterpreterException(
           "No branch transition was active. This is not allowed.");
     } else {
-      getParentSwitch.getParentSwitch()
+      parentSwitch
           .doSwitch(branchTransition.getBranchBehaviour_BranchTransition());
     }
 
@@ -291,7 +300,7 @@ public class RDSeffSwitchPiSeffDelegate {
       if (LOGGER.isDebugEnabled()) {
         LOGGER.debug("Interpret loop number " + i + ": " + object);
       }
-      getParentSwitch.getParentSwitch().doSwitch(object.getBodyBehaviour_Loop());
+      getParentSwitch().doSwitch(object.getBodyBehaviour_Loop());
       if (LOGGER.isDebugEnabled()) {
         LOGGER.debug("Finished loop number " + i + ": " + object);
       }
@@ -380,7 +389,7 @@ public class RDSeffSwitchPiSeffDelegate {
         LOGGER.debug("Interpret " + currentAction.eClass().getName() + ": " + currentAction);
       }
       this.firePassedEvent(currentAction, EventType.BEGIN);
-      getParentSwitch.getParentSwitch().doSwitch(currentAction);
+     this.getParentSwitch().doSwitch(currentAction);
       this.firePassedEvent(currentAction, EventType.END);
       currentAction = currentAction.getSuccessor_AbstractAction();
     }
@@ -458,11 +467,11 @@ public class RDSeffSwitchPiSeffDelegate {
            * context including its stack.
            */
           final InterpreterDefaultContext seffContext = new InterpreterDefaultContext(
-              this.myContext, RDSeffSwitchPiSeffDelegate.this.context.getRuntimeState(), true,
-              RDSeffSwitchPiSeffDelegate.this.context.getLocalPCMModelAtContextCreation());
+              this.myContext, RDSeffSwitchPi.this.context.getRuntimeState(), true,
+              RDSeffSwitchPi.this.context.getLocalPCMModelAtContextCreation());
           seffContext.getAssemblyContextStack().addAll(parentAssemblyContextStack);
-          final RDSeffSwitch seffInterpreter =
-              new RDSeffSwitch(seffContext, RDSeffSwitchPiSeffDelegate.this.basicComponentInstance);
+          final RDSeffSwitchPi seffInterpreter =
+              new RDSeffSwitchPi(seffContext, resultStackFrame, RDSeffSwitchPi.this.basicComponentInstance);
 
           if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Created new RDSeff interpreter for "
@@ -486,5 +495,13 @@ public class RDSeffSwitchPiSeffDelegate {
     this.context.getRuntimeState().getEventNotificationHelper()
         .firePassedEvent(new RDSEFFElementPassedEvent<T>(abstractAction, eventType, this.context,
             this.context.getAssemblyContextStack().peek()));
+  }
+
+  @Override
+  public Switch<Object> getParentSwitch() {
+      if (this.parentSwitch != null) {
+          return this.parentSwitch;
+      }
+      return this;
   }
 }

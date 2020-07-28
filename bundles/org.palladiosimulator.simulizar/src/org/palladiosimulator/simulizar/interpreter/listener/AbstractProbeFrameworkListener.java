@@ -173,7 +173,7 @@ public abstract class AbstractProbeFrameworkListener implements IListener {
         for (MeasurementSpecification responseTimeMeasurementSpec : this
                 .getMeasurementSpecificationsForMetricDescription(MetricDescriptionConstants.RESPONSE_TIME_METRIC)) {
             MeasuringPoint measuringPoint = responseTimeMeasurementSpec.getMonitor().getMeasuringPoint();
-            var probes = this.createStartAndStopProbe(measuringPoint, this.simuComModel);
+            List<Probe> probes = this.createStartAndStopProbe(measuringPoint, this.simuComModel);
             this.calculatorFactory.buildCalculator(MetricDescriptionConstants.RESPONSE_TIME_METRIC_TUPLE,
                     measuringPoint, DefaultCalculatorProbeSets.createStartStopProbeConfiguration(
                             probes.get(START_PROBE_INDEX), probes.get(STOP_PROBE_INDEX)));

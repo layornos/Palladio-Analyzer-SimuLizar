@@ -23,10 +23,6 @@ import org.palladiosimulator.monitorrepository.MonitorRepository;
 import org.palladiosimulator.monitorrepository.MonitorRepositoryPackage;
 import org.palladiosimulator.monitorrepository.ProcessingType;
 import org.palladiosimulator.pcm.core.entity.Entity;
-import org.palladiosimulator.pcm.repository.OperationSignature;
-import org.palladiosimulator.pcm.seff.ExternalCallAction;
-import org.palladiosimulator.pcm.usagemodel.EntryLevelSystemCall;
-import org.palladiosimulator.pcm.usagemodel.UsageScenario;
 import org.palladiosimulator.probeframework.calculator.DefaultCalculatorProbeSets;
 import org.palladiosimulator.probeframework.calculator.IGenericCalculatorFactory;
 import org.palladiosimulator.probeframework.probes.Probe;
@@ -44,17 +40,17 @@ import de.uka.ipd.sdq.simucomframework.probes.TakeCurrentSimulationTimeProbe;
  *
  * @author Steffen Becker, Sebastian Lehrig, Florian Rosenthal
  */
-public abstract class AbstractProbeFrameworkListener extends AbstractInterpreterListener {
+public abstract class AbstractProbeFrameworkListener implements IListener {
 
-    private static final int START_PROBE_INDEX = 0;
-    private static final int STOP_PROBE_INDEX = 1;
+    protected static final int START_PROBE_INDEX = 0;
+    protected static final int STOP_PROBE_INDEX = 1;
 
     protected final SimuComModel simuComModel;
     protected final IGenericCalculatorFactory calculatorFactory;
     protected final Reconfigurator reconfigurator;
     private final PCMPartitionManager pcmPartitionManager;
 
-    private final Map<String, List<TriggeredProbe>> currentTimeProbes = new HashMap<String, List<TriggeredProbe>>();
+    protected final Map<String, List<TriggeredProbe>> currentTimeProbes = new HashMap<String, List<TriggeredProbe>>();
 
     /**
      * @param modelAccessFactory
@@ -84,85 +80,7 @@ public abstract class AbstractProbeFrameworkListener extends AbstractInterpreter
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.upb.pcm.interpreter.interpreter.listener.AbstractInterpreterListener#
-     * beginUsageScenarioInterpretation
-     * (de.upb.pcm.interpreter.interpreter.listener.ModelElementPassedEvent)
-     */
-    @Override
-    public void beginUsageScenarioInterpretation(final ModelElementPassedEvent<UsageScenario> event) {
-        this.startMeasurement(event);
-    }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.upb.pcm.interpreter.interpreter.listener.AbstractInterpreterListener#
-     * endUsageScenarioInterpretation
-     * (de.upb.pcm.interpreter.interpreter.listener.ModelElementPassedEvent)
-     */
-    @Override
-    public void endUsageScenarioInterpretation(final ModelElementPassedEvent<UsageScenario> event) {
-        this.endMeasurement(event);
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.upb.pcm.interpreter.interpreter.listener.AbstractInterpreterListener#
-     * beginEntryLevelSystemCallInterpretation
-     * (de.upb.pcm.interpreter.interpreter.listener.ModelElementPassedEvent)
-     */
-    @Override
-    public void beginEntryLevelSystemCallInterpretation(final ModelElementPassedEvent<EntryLevelSystemCall> event) {
-        this.startMeasurement(event);
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.upb.pcm.interpreter.interpreter.listener.AbstractInterpreterListener#
-     * endEntryLevelSystemCallInterpretation
-     * (de.upb.pcm.interpreter.interpreter.listener.ModelElementPassedEvent)
-     */
-    @Override
-    public void endEntryLevelSystemCallInterpretation(final ModelElementPassedEvent<EntryLevelSystemCall> event) {
-        this.endMeasurement(event);
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.upb.pcm.simulizar.interpreter.listener.AbstractInterpreterListener#
-     * beginExternalCallInterpretation
-     * (de.upb.pcm.simulizar.interpreter.listener.ModelElementPassedEvent)
-     */
-    @Override
-    public void beginExternalCallInterpretation(final RDSEFFElementPassedEvent<ExternalCallAction> event) {
-        this.startMeasurement(event);
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.upb.pcm.simulizar.interpreter.listener.AbstractInterpreterListener#
-     * endExternalCallInterpretation
-     * (de.upb.pcm.simulizar.interpreter.listener.ModelElementPassedEvent)
-     */
-    @Override
-    public void endExternalCallInterpretation(final RDSEFFElementPassedEvent<ExternalCallAction> event) {
-        this.endMeasurement(event);
-    }
-
-    @Override
-    public <T extends EObject> void beginUnknownElementInterpretation(final ModelElementPassedEvent<T> event) {
-    }
-
-    @Override
-    public <T extends EObject> void endUnknownElementInterpretation(final ModelElementPassedEvent<T> event) {
-    }
 
     /**
      * Gets the {@link SimuComModel} which is related to this instance.
@@ -255,7 +173,7 @@ public abstract class AbstractProbeFrameworkListener extends AbstractInterpreter
         for (MeasurementSpecification responseTimeMeasurementSpec : this
                 .getMeasurementSpecificationsForMetricDescription(MetricDescriptionConstants.RESPONSE_TIME_METRIC)) {
             MeasuringPoint measuringPoint = responseTimeMeasurementSpec.getMonitor().getMeasuringPoint();
-            var probes = this.createStartAndStopProbe(measuringPoint, this.simuComModel);
+            List<Probe> probes = this.createStartAndStopProbe(measuringPoint, this.simuComModel);
             this.calculatorFactory.buildCalculator(MetricDescriptionConstants.RESPONSE_TIME_METRIC_TUPLE,
                     measuringPoint, DefaultCalculatorProbeSets.createStartStopProbeConfiguration(
                             probes.get(START_PROBE_INDEX), probes.get(STOP_PROBE_INDEX)));
@@ -291,7 +209,7 @@ public abstract class AbstractProbeFrameworkListener extends AbstractInterpreter
      * @param <T>
      * @param event
      */
-    private <T extends Entity> void startMeasurement(final ModelElementPassedEvent<T> event) {
+    protected <T extends Entity> void startMeasurement(final ModelElementPassedEvent<T> event) {
         if (this.currentTimeProbes.containsKey(((Entity) event.getModelElement()).getId())
                 && this.simulationIsRunning()) {
             this.currentTimeProbes.get(((Entity) event.getModelElement()).getId()).get(START_PROBE_INDEX)
@@ -302,7 +220,7 @@ public abstract class AbstractProbeFrameworkListener extends AbstractInterpreter
     /**
      * @param event
      */
-    private <T extends Entity> void endMeasurement(final ModelElementPassedEvent<T> event) {
+    protected <T extends Entity> void endMeasurement(final ModelElementPassedEvent<T> event) {
         if (this.currentTimeProbes.containsKey(((Entity) event.getModelElement()).getId())
                 && this.simulationIsRunning()) {
             this.currentTimeProbes.get(((Entity) event.getModelElement()).getId()).get(STOP_PROBE_INDEX)
@@ -310,30 +228,14 @@ public abstract class AbstractProbeFrameworkListener extends AbstractInterpreter
         }
     }
 
-    @Override
-    public void beginSystemOperationCallInterpretation(final ModelElementPassedEvent<OperationSignature> event) {
-        if (this.currentTimeProbes.containsKey(((Entity) event.getModelElement()).getId())
-                && this.simulationIsRunning()) {
-            this.currentTimeProbes.get(((Entity) event.getModelElement()).getId()).get(START_PROBE_INDEX)
-                    .takeMeasurement(event.getThread().getRequestContext());
-        }
-    }
 
-    @Override
-    public void endSystemOperationCallInterpretation(final ModelElementPassedEvent<OperationSignature> event) {
-        if (this.currentTimeProbes.containsKey(((Entity) event.getModelElement()).getId())
-                && this.simulationIsRunning()) {
-            this.currentTimeProbes.get(((Entity) event.getModelElement()).getId()).get(STOP_PROBE_INDEX)
-                    .takeMeasurement(event.getThread().getRequestContext());
-        }
-    }
 
     /**
      * Initializes reconfiguration time measurement.
      */
     protected abstract void initReconfigurationTimeMeasurement();
 
-    private boolean simulationIsRunning() {
+    protected boolean simulationIsRunning() {
         return this.simuComModel.getSimulationControl().isRunning();
     }
 }

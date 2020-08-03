@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.util.ComposedSwitch;
+import org.eclipse.emf.ecore.util.Switch;
 import org.palladiosimulator.pcm.usagemodel.ClosedWorkload;
 import org.palladiosimulator.pcm.usagemodel.OpenWorkload;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
@@ -14,6 +16,8 @@ import org.palladiosimulator.pcm.usagemodel.Workload;
 import org.palladiosimulator.pcm.usagemodel.util.UsagemodelSwitch;
 import org.palladiosimulator.simulizar.interpreter.InterpreterDefaultContext;
 import org.palladiosimulator.simulizar.interpreter.UsageScenarioSwitch;
+import org.palladiosimulator.simulizar.interpreter.UsageScenarioSwitchDelta;
+import org.palladiosimulator.simulizar.interpreter.UsageScenarioSwitchPi;
 
 import de.uka.ipd.sdq.simucomframework.SimuComSimProcess;
 import de.uka.ipd.sdq.simucomframework.usage.ClosedWorkloadUserFactory;
@@ -119,14 +123,18 @@ public class SimulatedUsageModels {
                 final InterpreterDefaultContext newContext = new InterpreterDefaultContext(
                         SimulatedUsageModels.this.rootContext, thread);
                 final UsageModel usageModel = newContext.getPCMPartitionManager().getLocalPCMModel().getUsageModel();
-                
+                final ComposedSwitch<Object> usageSwitch = new ComposedSwitch<>();
+                //TODO: guice @MartinWitt
+                usageSwitch.addSwitch(new UsageScenarioSwitchDelta<Object>(newContext,usageSwitch));
+                usageSwitch.addSwitch(new UsageScenarioSwitchPi<Object>(newContext,usageSwitch));
+
                 // If the UsageScenario is not contained in the UsageModel (e.g. it has
                 // been removed after the workload scheduled the new user, and before the 
                 // user starts execution) simply exit without processing the scenario.
                 usageModel.getUsageScenario_UsageModel().stream()
                 	.filter(sc -> sc.getId().equals(scenario.getId()))
                 	.findAny().ifPresent(sc -> {
-                	    new UsageScenarioSwitch<Object>(newContext).doSwitch(sc);
+                	   usageSwitch.doSwitch(sc);
                 	});
             }
         };

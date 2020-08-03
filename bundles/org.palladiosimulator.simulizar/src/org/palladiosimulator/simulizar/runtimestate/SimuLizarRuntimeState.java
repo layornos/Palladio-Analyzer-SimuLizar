@@ -1,8 +1,10 @@
 package org.palladiosimulator.simulizar.runtimestate;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
-import org.palladiosimulator.simulizar.interpreter.listener.LogDebugListener;
-import org.palladiosimulator.simulizar.interpreter.listener.ProbeFrameworkListener;
+import org.palladiosimulator.simulizar.interpreter.listener.AbstractProbeFrameworkListener;
+import org.palladiosimulator.simulizar.interpreter.listener.ILogDebugListener;
 import org.palladiosimulator.simulizar.reconfiguration.Reconfigurator;
 import org.palladiosimulator.simulizar.runconfig.SimuLizarWorkflowConfiguration;
 import org.palladiosimulator.simulizar.usagemodel.UsageEvolverFacade;
@@ -24,7 +26,9 @@ import de.uka.ipd.sdq.workflow.mdsd.blackboard.MDSDBlackboard;
 public class SimuLizarRuntimeState extends AbstractSimuLizarRuntimeState {
 
 	private static final Logger LOGGER = Logger.getLogger(SimuLizarRuntimeState.class);
-
+	private List<ILogDebugListener> debugListener;
+	private List<AbstractProbeFrameworkListener> probeFrameworkListener;
+	//TODO: guice @MartinWitt
     /**
      * @param configuration
      * @param modelAccess
@@ -36,8 +40,8 @@ public class SimuLizarRuntimeState extends AbstractSimuLizarRuntimeState {
 
     protected void initializeInterpreterListeners(final Reconfigurator reconfigurator) {
         LOGGER.debug("Adding Debug and monitoring interpreter listeners");
-        this.eventHelper.addObserver(new LogDebugListener());
-        this.eventHelper.addObserver(new ProbeFrameworkListener(this.getPCMPartitionManager(), this.getModel(), reconfigurator));
+        debugListener.forEach(eventHelper::addObserver);
+        probeFrameworkListener.forEach(eventHelper::addObserver);
     }
 
     public UsageEvolverFacade getUsageEvolverFacade() {

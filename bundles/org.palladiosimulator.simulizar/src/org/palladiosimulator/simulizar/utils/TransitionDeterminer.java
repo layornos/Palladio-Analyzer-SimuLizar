@@ -1,11 +1,9 @@
 package org.palladiosimulator.simulizar.utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
-import org.palladiosimulator.pcm.core.PCMRandomVariable;
 import org.palladiosimulator.pcm.seff.AbstractBranchTransition;
 import org.palladiosimulator.pcm.seff.GuardedBranchTransition;
 import org.palladiosimulator.pcm.seff.ProbabilisticBranchTransition;
@@ -13,7 +11,6 @@ import org.palladiosimulator.pcm.usagemodel.BranchTransition;
 import org.palladiosimulator.simulizar.interpreter.InterpreterDefaultContext;
 
 import de.uka.ipd.sdq.simucomframework.SimuComConfig;
-import de.uka.ipd.sdq.simucomframework.variables.StackContext;
 
 /**
  *
@@ -28,7 +25,8 @@ public class TransitionDeterminer {
 
     private final SimuComConfig config;
     private final InterpreterDefaultContext context;
-
+    private TransitionDeterminerPIUsageDelegate piDelegate;
+    private TransitionDeterminerDeltaBehaviourSeffDelegate seffDelegate;
     /**
      * Constructor.
      *
@@ -43,17 +41,7 @@ public class TransitionDeterminer {
         this.context = context;
     }
 
-    /**
-     * Checks whether the boolean expression in the condition holds or not.
-     *
-     * @param condition
-     *            the condition (must be a boolean expression).
-     * @return true if holds, otherwise false.
-     */
-    private boolean conditionHolds(final PCMRandomVariable condition) {
-        return StackContext.evaluateStatic(condition.getSpecification(), Boolean.class,
-                this.context.getStack().currentStackFrame());
-    }
+
 
     /**
      * Sums the probabilities of the list of probabilities. In a list of summed probabilities, each
@@ -68,12 +56,7 @@ public class TransitionDeterminer {
      * @return the summed probability list.
      */
     protected List<Double> createSummedProbabilityList(final List<Double> branchProbabilities) {
-        double currentSum = 0;
-        final List<Double> summedProbabilityList = new ArrayList<Double>();
-        for (final Double probability : branchProbabilities) {
-            summedProbabilityList.add((currentSum = currentSum + probability));
-        }
-        return summedProbabilityList;
+        return MathUtils.createSummedProbabilityList(branchProbabilities);
     }
 
     /**
@@ -85,16 +68,7 @@ public class TransitionDeterminer {
      * @return a branch transition.
      */
     public BranchTransition determineBranchTransition(final EList<BranchTransition> branchTransitions) {
-        final List<Double> summedProbabilityList = this
-                .createSummedProbabilityList(this.extractProbabiltiesUsageModel(branchTransitions));
-
-        final int transitionIndex = this.getRandomIndex(summedProbabilityList, this.config);
-
-        final BranchTransition branchTransition = branchTransitions.get(transitionIndex);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Chosen branch transition " + transitionIndex + " " + branchTransition);
-        }
-        return branchTransition;
+        return piDelegate.determineBranchTransition(branchTransitions);
     }
 
     /**
@@ -107,34 +81,7 @@ public class TransitionDeterminer {
      */
     private GuardedBranchTransition determineGuardedBranchTransition(
             final EList<AbstractBranchTransition> guardedBranchTransitions) {
-
-        /*
-         * There is no predefined order in evaluating the guards attached to a BranchAction. So the
-         * first guard which evaluates to true will be chosen.
-         *
-         * Further: As it is unclear for INNER variables in branch conditions if different or if the
-         * same collection element is meant by the component developer, the current PCM version
-         * forbids the use of INNER characterizations in branch conditions. Thus, this problem has
-         * not to be addressed like in the collection iterator (EvaluationProxies and the same value
-         * for all occurrences in one iteration).
-         */
-        int i = 0;
-        GuardedBranchTransition branchTransition = null;
-        for (final AbstractBranchTransition abstractBranchTransition : guardedBranchTransitions) {
-            final GuardedBranchTransition guardedBranchTransition = (GuardedBranchTransition) abstractBranchTransition;
-            final PCMRandomVariable condition = guardedBranchTransition.getBranchCondition_GuardedBranchTransition();
-
-            if (this.conditionHolds(condition)) {
-                branchTransition = (GuardedBranchTransition) guardedBranchTransitions.get(i);
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Conditions holds for branch transition " + i + " " + branchTransition);
-                }
-                break;
-            }
-            i++;
-
-        }
-        return branchTransition;
+        return seffDelegate.determineGuardedBranchTransition(guardedBranchTransitions);
     }
 
     /**
@@ -147,18 +94,10 @@ public class TransitionDeterminer {
      */
     public ProbabilisticBranchTransition determineProbabilisticBranchTransition(
             final EList<AbstractBranchTransition> probabilisticBranchTransitions) {
-        final List<Double> summedProbabilityList = this
-                .createSummedProbabilityList(this.extractProbabiltiesRDSEFF(probabilisticBranchTransitions));
-
-        final int transitionIndex = this.getRandomIndex(summedProbabilityList, this.config);
-
-        final ProbabilisticBranchTransition branchTransition = (ProbabilisticBranchTransition) probabilisticBranchTransitions
-                .get(transitionIndex);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Chosen branch transition " + transitionIndex + " " + branchTransition);
-        }
-        return branchTransition;
+        return seffDelegate.determineProbabilisticBranchTransition(probabilisticBranchTransitions);
     }
+
+
 
     /**
      * Determines a branch transition in the list of branch transitions. The list can only contains
@@ -194,11 +133,7 @@ public class TransitionDeterminer {
      */
     protected List<Double> extractProbabiltiesRDSEFF(
             final EList<AbstractBranchTransition> probabilisticBranchTransitions) {
-        final List<Double> probabilityList = new ArrayList<Double>();
-        for (final AbstractBranchTransition probabilisticBranchTransition : probabilisticBranchTransitions) {
-            probabilityList.add(((ProbabilisticBranchTransition) probabilisticBranchTransition).getBranchProbability());
-        }
-        return probabilityList;
+    return seffDelegate.extractProbabiltiesRDSEFF(probabilisticBranchTransitions);
     }
 
     /**
@@ -209,40 +144,6 @@ public class TransitionDeterminer {
      * @return a list only containing the probabilities.
      */
     protected List<Double> extractProbabiltiesUsageModel(final EList<BranchTransition> branchTransitions) {
-        final List<Double> probabilityList = new ArrayList<Double>();
-        for (final BranchTransition branchTransition : branchTransitions) {
-            probabilityList.add(branchTransition.getBranchProbability());
-        }
-        return probabilityList;
+        return piDelegate.extractProbabiltiesUsageModel(branchTransitions);
     }
-
-    /**
-     * Method calculates a random index for the given list of summed probabilities.
-     *
-     * @param summedProbabilityList
-     *            a list of summed probabilities.
-     * @param simuComConfig
-     *            the SimuCom config.
-     * @return a random index, or -1 if summedProbabilityList is empty, or no index can be
-     *         determined.
-     */
-    private int getRandomIndex(final List<Double> summedProbabilityList, final SimuComConfig simuComConfig) {
-        if (summedProbabilityList.size() == 0) {
-            return -1;
-        }
-
-        final double lastSum = summedProbabilityList.get(summedProbabilityList.size() - 1);
-        final double randomNumer = simuComConfig.getRandomGenerator().random();
-
-        // get branch
-        int i = 0;
-        for (final Double sum : summedProbabilityList) {
-            if (lastSum * randomNumer < sum) {
-                return i;
-            }
-            i++;
-        }
-        return -1;
-    }
-
 }

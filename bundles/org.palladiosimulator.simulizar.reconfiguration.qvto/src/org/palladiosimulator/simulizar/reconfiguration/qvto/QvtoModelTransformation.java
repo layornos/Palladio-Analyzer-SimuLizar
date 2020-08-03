@@ -7,7 +7,6 @@ import org.apache.commons.collections15.CollectionUtils;
 import org.apache.commons.collections15.Predicate;
 import org.apache.commons.collections15.PredicateUtils;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
-import org.eclipse.m2m.qvt.oml.TransformationExecutor;
 import org.palladiosimulator.simulizar.reconfigurationrule.impl.ModelTransformationImpl;
 
 @SuppressWarnings("restriction")

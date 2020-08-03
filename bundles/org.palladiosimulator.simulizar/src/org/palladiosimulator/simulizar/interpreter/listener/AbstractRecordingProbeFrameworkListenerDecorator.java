@@ -23,7 +23,7 @@ import de.uka.ipd.sdq.simucomframework.SimuComConfig;
  *
  */
 public abstract class AbstractRecordingProbeFrameworkListenerDecorator {
-
+	//TODO: @MartinWitt aufteilen in 4 decorator?
     private AbstractProbeFrameworkListener probeFrameworkListener;
 
     /**

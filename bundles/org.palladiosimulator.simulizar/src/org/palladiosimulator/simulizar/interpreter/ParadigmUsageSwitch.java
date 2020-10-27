@@ -1,7 +1,7 @@
 package org.palladiosimulator.simulizar.interpreter;
 
 import org.apache.log4j.Logger;
-import org.palladiosimulator.simulizar.utils.TransitionDeterminer;
+import org.palladiosimulator.simulizar.utils.DomainTransitionDeterminer;
 
 import de.uka.ipd.sdq.simucomframework.variables.StackContext;
 import usage.AbstractUserAction;
@@ -18,7 +18,7 @@ public class ParadigmUsageSwitch<T> extends UsageSwitch<T> {
 	protected static final Logger LOGGER = Logger.getLogger(ParadigmUsageSwitch.class.getName());
 
     private final InterpreterDefaultContext context;
-    private final TransitionDeterminer transitionDeterminer;
+    private final DomainTransitionDeterminer transitionDeterminer;
     
     /**
      * Constructor
@@ -28,7 +28,7 @@ public class ParadigmUsageSwitch<T> extends UsageSwitch<T> {
      */
     public ParadigmUsageSwitch(final InterpreterDefaultContext context) {
         this.context = context;
-        this.transitionDeterminer = new TransitionDeterminer(context);
+        this.transitionDeterminer = new DomainTransitionDeterminer(context);
     }
 
 	

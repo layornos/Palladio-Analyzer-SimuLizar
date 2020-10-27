@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Simulationevents
+Bundle-SymbolicName: org.palladiosimulator.simulizar.simulationevents
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: org.palladiosimulator.simulizar.simulationevents
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: org.palladiosimulator.simulizar.simulationevents;uses:="de.uka.ipd.sdq.simulation.abstractsimengine,de.uka.ipd.sdq.simucomframework.entities,de.uka.ipd.sdq.simucomframework.model"
+Require-Bundle: org.apache.log4j,
+ de.uka.ipd.sdq.simucomframework,
+ de.uka.ipd.sdq.simulation.abstractsimengine,
+ org.palladiosimulator.metricspec,
+ org.palladiosimulator.probeframework

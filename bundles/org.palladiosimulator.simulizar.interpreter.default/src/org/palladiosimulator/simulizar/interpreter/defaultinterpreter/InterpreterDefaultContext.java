@@ -1,4 +1,4 @@
-package org.palladiosimulator.simulizar.interpreter;
+package org.palladiosimulator.simulizar.interpreter.defaultinterpreter;
 
 import java.util.Stack;
 
@@ -7,8 +7,7 @@ import org.palladiosimulator.pcm.core.composition.AssemblyContext;
 import org.palladiosimulator.simulizar.runtimestate.AbstractSimuLizarRuntimeState;
 import org.palladiosimulator.simulizar.utils.PCMPartitionManager;
 
-import com.sun.tools.javac.util.Context;
-
+import de.uka.ipd.sdq.simucomframework.Context;
 import de.uka.ipd.sdq.simucomframework.SimuComSimProcess;
 import de.uka.ipd.sdq.simucomframework.resources.AbstractSimulatedResourceContainer;
 import de.uka.ipd.sdq.simucomframework.resources.IAssemblyAllocationLookup;

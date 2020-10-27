@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Transitiondeterminer
+Bundle-SymbolicName: org.palladiosimulator.simulator.transitiondeterminer
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: org.palladiosimulator.simulator.transitiondeterminer
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Require-Bundle: org.apache.log4j,
+ org.palladiosimulator.pcm,
+ de.uka.ipd.sdq.simucomframework,
+ de.uka.ipd.sdq.simucomframework.variables,
+ org.palladiosimulator.simulizar.interpreter.default;bundle-version="1.0.0",
+ de.uka.ipd.sdq.probfunction.math;bundle-version="4.3.0"

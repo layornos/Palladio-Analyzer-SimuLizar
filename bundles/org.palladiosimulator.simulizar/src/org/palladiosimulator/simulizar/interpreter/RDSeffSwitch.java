@@ -48,7 +48,7 @@ import org.palladiosimulator.simulizar.interpreter.listener.EventType;
 import org.palladiosimulator.simulizar.interpreter.listener.RDSEFFElementPassedEvent;
 import org.palladiosimulator.simulizar.runtimestate.SimulatedBasicComponentInstance;
 import org.palladiosimulator.simulizar.utils.SimulatedStackHelper;
-import org.palladiosimulator.simulizar.utils.TransitionDeterminer;
+import org.palladiosimulator.simulizar.utils.DomainTransitionDeterminer;
 
 import de.uka.ipd.sdq.simucomframework.ResourceRegistry;
 import de.uka.ipd.sdq.simucomframework.fork.ForkExecutor;
@@ -69,7 +69,7 @@ class RDSeffSwitch extends SeffSwitch<Object> implements IComposableSwitch {
     private static final Logger LOGGER = Logger.getLogger(RDSeffSwitch.class);
 
     private ComposedSwitch<Object> parentSwitch;
-    private final TransitionDeterminer transitionDeterminer;
+    private final DomainTransitionDeterminer transitionDeterminer;
     private final InterpreterDefaultContext context;
     private final Allocation allocation;
 
@@ -90,7 +90,7 @@ class RDSeffSwitch extends SeffSwitch<Object> implements IComposableSwitch {
         super();
         this.context = context;
         this.allocation = context.getLocalPCMModelAtContextCreation().getAllocation();
-        this.transitionDeterminer = new TransitionDeterminer(context);
+        this.transitionDeterminer = new DomainTransitionDeterminer(context);
         this.resultStackFrame = new SimulatedStackframe<Object>();
         this.basicComponentInstance = basicComponentInstance;
     }

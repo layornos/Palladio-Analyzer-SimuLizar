@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Modelobserver
+Bundle-SymbolicName: org.palladiosimulator.simulizar.modelobserver
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: org.palladiosimulator.simulizar.modelobserver
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: org.palladiosimulator.simulizar.modelobserver
+Require-Bundle: org.apache.log4j,
+ org.eclipse.emf.common,
+ org.eclipse.emf.ecore,
+ org.palladiosimulator.mdsdprofiles.api,
+ org.palladiosimulator.simulizar.runtimestate,
+ org.palladiosimulator.pcm,
+ de.uka.ipd.sdq.simucomframework,
+ org.palladiosimulator.simulizar.abstractruntimestate;bundle-version="1.0.0"

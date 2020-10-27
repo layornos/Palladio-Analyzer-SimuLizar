@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Runconfiguration
+Bundle-SymbolicName: org.palladiosimulator.simulizar.runconfiguration
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: org.palladiosimulator.simulizar.runconfiguration
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: org.palladiosimulator.simulizar.runconfig;uses:="org.eclipse.debug.core,de.uka.ipd.sdq.codegen.simucontroller.runconfig,de.uka.ipd.sdq.workflow.launchconfig"
+Require-Bundle: org.palladiosimulator.analyzer.workflow,
+ org.palladiosimulator.simulizar.constants,
+ de.uka.ipd.sdq.codegen.simucontroller,
+ de.uka.ipd.sdq.simucomframework

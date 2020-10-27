@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Default
+Bundle-SymbolicName: org.palladiosimulator.simulizar.interpreter.default
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: org.palladiosimulator.simulizar.interpreter.default
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Require-Bundle: org.palladiosimulator.analyzer.workflow,
+ org.palladiosimulator.pcm,
+ de.uka.ipd.sdq.simucomframework,
+ de.uka.ipd.sdq.simucomframework.variables,
+ org.palladiosimulator.simulizar.utils;bundle-version="1.0.0"
+Export-Package: org.palladiosimulator.simulizar.interpreter.defaultinterpreter

@@ -1,4 +1,4 @@
-package org.palladiosimulator.simulizar.utils;
+package org.palladiosimulator.simulizar.transitiondeterminer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +9,10 @@ import org.palladiosimulator.pcm.core.PCMRandomVariable;
 import org.palladiosimulator.pcm.seff.AbstractBranchTransition;
 import org.palladiosimulator.pcm.seff.GuardedBranchTransition;
 import org.palladiosimulator.pcm.seff.ProbabilisticBranchTransition;
-import usage.BranchTransition;
-import org.palladiosimulator.simulizar.interpreter.InterpreterDefaultContext;
-
+import org.palladiosimulator.pcm.usagemodel.BranchTransition;
+import org.palladiosimulator.simulizar.interpreter.defaultinterpreter.InterpreterDefaultContext;
 import de.uka.ipd.sdq.simucomframework.SimuComConfig;
+//import de.uka.ipd.sdq.simucomframework.SimuComConfig;
 import de.uka.ipd.sdq.simucomframework.variables.StackContext;
 
 /**
